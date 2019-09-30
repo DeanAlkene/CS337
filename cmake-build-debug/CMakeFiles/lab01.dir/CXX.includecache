@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/dean/CLionProjects/lab01/main.cpp
+iostream
+-
+fstream
+-
+sstream
+-
+vector
+-
+string
+-
+glad/glad.h
+-
+GLFW/glfw3.h
+-
+glm/glm.hpp
+-
+
