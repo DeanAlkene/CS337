@@ -6,6 +6,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 using namespace std;
 
 const int WINDOW_WIDTH = 1000;
@@ -13,20 +15,26 @@ const int WINDOW_HEIGHT = 800;
 const char* vertexShaderSource =
         "#version 330 core\n"
         "layout (location = 0) in vec3 aPos;\n"
+        "layout (location = 1) in vec3 aNormal;\n"
+        "out vec3 Normal;\n"
         "void main()\n"
         "{\n"
         "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+        "   Normal = aNormal;\n"
         "}\0";
 const char* fragmentShaderSource =
         "#version 330 core\n"
+        "in vec3 Normal;\n"
         "out vec4 FragColor;\n"
+        "uniform vec4 objColor;\n"
         "void main()\n"
         "{\n"
-        "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+        "FragColor = objColor;\n"
         "}\n\0";
 
 vector<glm::vec3> vertices;
 vector<glm::vec3> normals;
+vector<glm::vec3> vertexAndNormal;
 vector<GLuint> faces;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -111,13 +119,13 @@ int main()
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO); //Bind VBO to Buffer Type
-    glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(vertices[0]), vertices.data(), GL_STATIC_DRAW); //Copy vertices to buffer memory use DYNAMIC/STREAM DRAW if it will change
+    glBufferData(GL_ARRAY_BUFFER, vertexAndNormal.size()*sizeof(vertexAndNormal[0]), vertexAndNormal.data(), GL_STATIC_DRAW); //Copy vertices to buffer memory use DYNAMIC/STREAM DRAW if it will change
 
     //Index Drawing Optional
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size()*sizeof(faces[0]), faces.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); //How to explain vertex data
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0); //How to explain vertex data
     glEnableVertexAttribArray(0);
 /*------------------------------------------------------------------*/
 
@@ -131,6 +139,15 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
+
+        //Color changing respected to time, using uniform
+        float timeValue = glfwGetTime();
+        float blueValue = sin(timeValue) / 2.0f + 0.5f;
+        float redValue = sin(timeValue + glm::half_pi<float>()) / 2.0f + 0.5f;
+        float greenValue = sin(timeValue + glm::pi<float>()) / 2.0f + 0.5f;
+        int vertexColorLocation = glGetUniformLocation(shaderProgram, "objColor");
+        glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
+
         glBindVertexArray(VAO);
         //glDrawArrays(GL_TRIANGLES, 0, 3);
         //Index Drawing Optional
@@ -219,5 +236,10 @@ void calculateNormal()
     for(auto i = 0; i < vertices.size(); ++i)
     {
         normals[i] = glm::normalize(normals[i]);
+    }
+    for(auto i = 0; i < vertices.size(); ++i)
+    {
+        vertexAndNormal.push_back(vertices[i]);
+        vertexAndNormal.push_back(normals[i]);
     }
 }
