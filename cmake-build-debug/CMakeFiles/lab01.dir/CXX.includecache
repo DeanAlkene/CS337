@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/home/dean/CLionProjects/lab01/Shader.h
+iostream
+-
+fstream
+-
+sstream
+-
+string
+-
+glad/glad.h
+-
+
 /home/dean/CLionProjects/lab01/main.cpp
 iostream
 -
@@ -27,4 +39,6 @@ glm/gtc/matrix_transform.hpp
 -
 glm/gtc/type_ptr.hpp
 -
+Shader.h
+/home/dean/CLionProjects/lab01/Shader.h
 

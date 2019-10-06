@@ -8,10 +8,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Shader.h"
 using namespace std;
 
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
+/*
 const char* vertexShaderSource =
         "#version 330 core\n"
         "layout (location = 0) in vec3 aPos;\n"
@@ -31,7 +33,7 @@ const char* fragmentShaderSource =
         "{\n"
         "FragColor = objColor;\n"
         "}\n\0";
-
+*/
 vector<glm::vec3> vertices;
 vector<glm::vec3> normals;
 vector<glm::vec3> vertexAndNormal;
@@ -66,49 +68,8 @@ int main()
 
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
 /*------------------------------------------------------------------*/
-    unsigned int vertexShader, fragmentShader;
-    int successV, successF;
-    char infoLogV[512], infoLogF[512];
-
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &successV);
-    if(!successV)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLogV);
-        cerr << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLogV << endl;
-    }
-
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &successF);
-    if(!successF)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLogF);
-        cerr << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLogF << endl;
-    }
-
-    unsigned int shaderProgram;
-    int successP;
-    char infoLogP[512];
-
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &successP);
-    if(!successP)
-    {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLogP);
-        cerr << "ERROR::SHADER::PROGRAM::LINK_FAILED\n" << infoLogP << endl;
-    }
-
-    glDeleteShader(vertexShader); //no use after linking
-    glDeleteShader(fragmentShader);
+    Shader shader("./lab01.vs", "./lab01.fs");
 /*------------------------------------------------------------------*/
     loadObj("./dragon.obj");
     unsigned int VAO, VBO, EBO;
@@ -138,15 +99,14 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shaderProgram);
+        shader.activate();
 
         //Color changing respected to time, using uniform
         float timeValue = glfwGetTime();
         float blueValue = sin(timeValue) / 2.0f + 0.5f;
         float redValue = sin(timeValue + glm::half_pi<float>()) / 2.0f + 0.5f;
         float greenValue = sin(timeValue + glm::pi<float>()) / 2.0f + 0.5f;
-        int vertexColorLocation = glGetUniformLocation(shaderProgram, "objColor");
-        glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
+        shader.setVec4("objColor", redValue, greenValue, blueValue, 1.0f);
 
         glBindVertexArray(VAO);
         //glDrawArrays(GL_TRIANGLES, 0, 3);
