@@ -84,6 +84,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/dean/CLionProjects/lab01/Camera.h">
+			<Option target="lab01"/>
+		</Unit>
 		<Unit filename="/home/dean/CLionProjects/lab01/Shader.h">
 			<Option target="lab01"/>
 		</Unit>

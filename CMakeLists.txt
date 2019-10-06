@@ -3,6 +3,6 @@ project(lab01)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(lab01 main.cpp glad.c Shader.h)
+add_executable(lab01 main.cpp glad.c Shader.h Camera.h)
 set(SOURCE_FILES main.cpp glad.c)
 target_link_libraries(lab01 GL GLU glfw3 X11 Xxf86vm Xrandr pthread Xi dl Xinerama Xcursor)
