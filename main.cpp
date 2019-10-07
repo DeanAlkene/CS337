@@ -106,7 +106,10 @@ int main()
         float blueValue = sin(timeValue) / 2.0f + 0.5f;
         float redValue = sin(timeValue + glm::half_pi<float>()) / 2.0f + 0.5f;
         float greenValue = sin(timeValue + glm::pi<float>()) / 2.0f + 0.5f;
+        glm::mat4 trans(1.0f);
+        trans = glm::rotate(trans, timeValue, glm::vec3(1.0f, 1.0f, 1.0f));
         shader.setVec4("objColor", redValue, greenValue, blueValue, 1.0f);
+        shader.setMat4("transform", trans);
 
         glBindVertexArray(VAO);
         //glDrawArrays(GL_TRIANGLES, 0, 3);

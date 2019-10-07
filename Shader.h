@@ -16,7 +16,7 @@ class Shader
 private:
     unsigned int vertexShader, fragmentShader, shaderProgram;
 
-    void checkCompileError(unsigned int shader, std::string type)
+    void checkCompileError(unsigned int shader, const std::string &type)
     {
         int success;
         char infoLog[512];
@@ -25,7 +25,7 @@ private:
             glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
             if(!success)
             {
-                glGetShaderInfoLog(shader, 512, NULL, infoLog);
+                glGetShaderInfoLog(shader, 512, nullptr, infoLog);
                 std::cerr << "ERROR::SHADER::" << type << "::COMPILATION_FAILED\n" << infoLog << std::endl;
             }
         }
@@ -34,7 +34,7 @@ private:
             glGetProgramiv(shader, GL_LINK_STATUS, &success);
             if(!success)
             {
-                glGetProgramInfoLog(shader, 512, NULL, infoLog);
+                glGetProgramInfoLog(shader, 512, nullptr, infoLog);
                 std::cerr << "ERROR::SHADER::" << type << "::LINK_FAILED\n" << infoLog << std::endl;
             }
         }
@@ -61,7 +61,7 @@ public:
             vertexCode   = vShaderStream.str();
             fragmentCode = fShaderStream.str();
         }
-        catch (std::ifstream::failure e)
+        catch (std::ifstream::failure &e)
         {
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ" << std::endl;
         }
@@ -70,12 +70,12 @@ public:
         const char* fShaderCode = fragmentCode.c_str();
 
         vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShader, 1, &vShaderCode, NULL);
+        glShaderSource(vertexShader, 1, &vShaderCode, nullptr);
         glCompileShader(vertexShader);
         checkCompileError(vertexShader, "VERTEX");
 
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentShader, 1, &fShaderCode, NULL);
+        glShaderSource(fragmentShader, 1, &fShaderCode, nullptr);
         glCompileShader(fragmentShader);
         checkCompileError(fragmentShader, "FRAGMENT");
 
@@ -106,7 +106,7 @@ public:
 
     void setFloat(const std::string &name, float value) const
     {
-        glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), value);
+        glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
     }
 
     void setVec2(const std::string &name, const glm::vec2 &value) const
