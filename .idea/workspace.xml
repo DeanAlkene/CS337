@@ -13,8 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c3b45d55-7f83-4b4c-96f8-854e88ec14c9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shader.h" beforeDir="false" afterPath="$PROJECT_DIR$/Shader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -178,12 +176,12 @@
       <workItem from="1569910148742" duration="3616000" />
       <workItem from="1570026140799" duration="194000" />
       <workItem from="1570362012199" duration="7675000" />
-      <workItem from="1570418893042" duration="1348000" />
+      <workItem from="1570418893042" duration="1966000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27126000" />
+    <option name="totallyTimeSpent" value="27744000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
