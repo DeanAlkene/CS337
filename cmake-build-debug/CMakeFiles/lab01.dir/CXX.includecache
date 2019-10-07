@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+/home/dean/CLionProjects/lab01/Camera.h
+glad/glad.h
+-
+glm/glm.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+
 /home/dean/CLionProjects/lab01/Shader.h
 iostream
 -
@@ -41,4 +49,6 @@ glm/gtc/type_ptr.hpp
 -
 Shader.h
 /home/dean/CLionProjects/lab01/Shader.h
+Camera.h
+/home/dean/CLionProjects/lab01/Camera.h
 

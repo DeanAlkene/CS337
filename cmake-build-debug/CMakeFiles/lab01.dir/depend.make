@@ -3,6 +3,7 @@
 
 CMakeFiles/lab01.dir/glad.c.o: ../glad.c
 
+CMakeFiles/lab01.dir/main.cpp.o: ../Camera.h
 CMakeFiles/lab01.dir/main.cpp.o: ../Shader.h
 CMakeFiles/lab01.dir/main.cpp.o: ../main.cpp
 
