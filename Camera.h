@@ -20,7 +20,7 @@ enum Movement
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 0.5f;
-const float SENSITIVITY = 0.01f;
+const float SENSITIVITY = 0.03f;
 const float ZOOM = 45.0f;
 
 class Camera
@@ -115,12 +115,12 @@ public:
 
     void processMouseScroll(float yoffset)
     {
-        if(zoom >= 1.0f && zoom <= 45.0f)
+        if(zoom >= 1.0f && zoom <= 100.0f)
             zoom -= yoffset;
         if(zoom < 1.0f)
             zoom = 1.0f;
-        if(zoom > 45.0f)
-            zoom = 45.0f;
+        if(zoom > 100.0f)
+            zoom = 100.0f;
     }
 
 };

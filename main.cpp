@@ -22,7 +22,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 bool firstMouse = true;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, -0.1f, 2.0f));
 
 vector<glm::vec3> vertices;
 vector<glm::vec3> normals;
@@ -102,8 +102,8 @@ int main()
         //Color changing respected to time, using uniform
         float timeValue = glfwGetTime();
         float blueValue = sin(timeValue) / 2.0f + 0.5f;
-        float redValue = sin(timeValue + glm::half_pi<float>()) / 2.0f + 0.5f;
-        float greenValue = sin(timeValue + glm::pi<float>()) / 2.0f + 0.5f;
+        float redValue = sin(timeValue + glm::three_over_two_pi<float>() / 2.0f) / 2.0f + 0.5f;
+        float greenValue = sin(timeValue + glm::three_over_two_pi<float>()) / 2.0f + 0.5f;
         shader.setVec4("objColor", redValue, greenValue, blueValue, 1.0f);
 
         deltaTime = timeValue - lastFrame;
@@ -112,7 +112,7 @@ int main()
         glm::mat4 model(1.0f);
         glm::mat4 view(1.0f);
         glm::mat4 projection(1.0f);
-        model = glm::rotate(model, glm::radians(-30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         view = camera.getViewMatrix();
         projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
         shader.setMat4("model", model);
