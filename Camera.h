@@ -81,6 +81,11 @@ public:
         return zoom;
     }
 
+    glm::vec3 getPosition()
+    {
+        return position;
+    }
+
     void processKeyboard(Movement dir, float deltaTime)
     {
         float speed = moveSpeed * deltaTime;

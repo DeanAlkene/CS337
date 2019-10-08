@@ -41,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="104" column="79" selection-start-line="104" selection-start-column="79" selection-end-line="104" selection-end-column="79" />
+            <state relative-caret-position="352">
+              <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -53,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Camera.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-666">
-              <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+            <state relative-caret-position="918">
+              <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
               <folding>
                 <element signature="e#85#107#0" expanded="true" />
               </folding>
@@ -65,7 +65,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Shader.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1980">
+            <state relative-caret-position="330">
               <caret line="90" selection-start-line="90" selection-end-line="90" />
               <folding>
                 <element signature="e#85#104#0" expanded="true" />
@@ -77,8 +77,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmake-build-debug/lab01.fs">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="17" selection-start-column="17" selection-end-column="17" />
+            <state relative-caret-position="440">
+              <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -86,8 +86,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmake-build-debug/lab01.vs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+            <state relative-caret-position="264">
+              <caret line="12" column="48" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -111,10 +111,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/cmake-build-debug/lab01.fs" />
         <option value="$PROJECT_DIR$/Shader.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/lab01.vs" />
         <option value="$PROJECT_DIR$/Camera.h" />
+        <option value="$PROJECT_DIR$/cmake-build-debug/lab01.fs" />
         <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
@@ -130,10 +130,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -182,12 +179,13 @@
       <workItem from="1570362012199" duration="7675000" />
       <workItem from="1570418893042" duration="2863000" />
       <workItem from="1570427480976" duration="9938000" />
-      <workItem from="1570463177538" duration="1004000" />
+      <workItem from="1570463177538" duration="1308000" />
+      <workItem from="1570533343029" duration="4607000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39583000" />
+    <option name="totallyTimeSpent" value="44494000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -214,7 +212,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3299435" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Messages" order="8" weight="0.2259887" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32659933" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32768363" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3299435" />
       <window_info anchor="bottom" id="CMake" order="12" weight="0.3299435" />
@@ -278,7 +276,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Shader.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1980">
+        <state relative-caret-position="330">
           <caret line="90" selection-start-line="90" selection-end-line="90" />
           <folding>
             <element signature="e#85#104#0" expanded="true" />
@@ -286,24 +284,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/lab01.fs">
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/lab01.vs">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="17" selection-start-column="17" selection-end-column="17" />
+        <state relative-caret-position="264">
+          <caret line="12" column="48" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/lab01.vs">
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/lab01.fs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+        <state relative-caret-position="440">
+          <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Camera.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-666">
-          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+        <state relative-caret-position="918">
+          <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
           <folding>
             <element signature="e#85#107#0" expanded="true" />
           </folding>
@@ -312,8 +310,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="104" column="79" selection-start-line="104" selection-start-column="79" selection-end-line="104" selection-end-column="79" />
+        <state relative-caret-position="352">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

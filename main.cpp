@@ -14,6 +14,7 @@ using namespace std;
 
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
+const float ALPHA = 0.6f;
 
 float lastX = WINDOW_WIDTH / 2.0f;
 float lastY = WINDOW_HEIGHT / 2.0f;
@@ -24,10 +25,13 @@ bool firstMouse = true;
 
 Camera camera(glm::vec3(0.0f, -0.1f, 2.0f));
 
+glm::vec3 lightPos(0.0f, 2.0f, 1.0f);
+
 vector<glm::vec3> vertices;
 vector<glm::vec3> normals;
 vector<glm::vec3> vertexAndNormal;
 vector<GLuint> faces;
+vector<GLuint> vertexNormCount;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -65,6 +69,8 @@ int main()
 
     //glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 /*------------------------------------------------------------------*/
     Shader shader("./lab01.vs", "./lab01.fs");
@@ -86,6 +92,9 @@ int main()
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0); //How to explain vertex data
     glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 /*------------------------------------------------------------------*/
 
     while(!glfwWindowShouldClose(window))
@@ -104,7 +113,12 @@ int main()
         float blueValue = sin(timeValue) / 2.0f + 0.5f;
         float redValue = sin(timeValue + glm::three_over_two_pi<float>() / 2.0f) / 2.0f + 0.5f;
         float greenValue = sin(timeValue + glm::three_over_two_pi<float>()) / 2.0f + 0.5f;
-        shader.setVec4("objColor", redValue, greenValue, blueValue, 1.0f);
+        //shader.setVec3("objColor", redValue, greenValue, blueValue);
+        shader.setVec3("objColor", 0.0f, 0.1f, 0.5f);
+        shader.setFloat("alpha", ALPHA);
+        shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        shader.setVec3("lightPos", lightPos);
+        shader.setVec3("viewPos", camera.getPosition());
 
         deltaTime = timeValue - lastFrame;
         lastFrame = timeValue;
@@ -112,7 +126,7 @@ int main()
         glm::mat4 model(1.0f);
         glm::mat4 view(1.0f);
         glm::mat4 projection(1.0f);
-        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         view = camera.getViewMatrix();
         projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
         shader.setMat4("model", model);
@@ -215,6 +229,7 @@ void loadObj(const char* filename)
 void calculateNormal()
 {
     normals.resize(vertices.size(), glm::vec3(0.0,0.0,0.0));
+    vertexNormCount.resize(vertices.size(), 0);
     //vector<glm::vec3> planeNormals;
     //planeNormals.resize(faces.size(), glm::vec3(0.0,0.0,0.0));
     for(auto i = 0; i < faces.size(); i += 3)
@@ -223,21 +238,17 @@ void calculateNormal()
         x = faces[i];
         y = faces[i+1];
         z = faces[i+2];
-        glm::vec3 n = glm::normalize(
-                glm::cross(
-                        (vertices[y]-vertices[x]),
-                        (vertices[z]-vertices[x])));
-        //normals[x] = normals[y] = normals[z] = n;
-        //}
-
-        //Some problems
+        glm::vec3 n = glm::normalize(glm::cross((vertices[y]-vertices[x]),(vertices[z]-vertices[y])));
         normals[x] += n;
         normals[y] += n;
         normals[z] += n;
+        vertexNormCount[x]++;
+        vertexNormCount[y]++;
+        vertexNormCount[z]++;
     }
     for(auto i = 0; i < vertices.size(); ++i)
     {
-        normals[i] = glm::normalize(normals[i]);
+        normals[i] = glm::normalize(normals[i] / (float)vertexNormCount[i]);
     }
     for(auto i = 0; i < vertices.size(); ++i)
     {
