@@ -5,9 +5,7 @@
 #ifndef LAB01_CAMERA_H
 #define LAB01_CAMERA_H
 
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "Utils.h"
 
 enum Movement
 {
@@ -20,7 +18,7 @@ enum Movement
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 0.5f;
-const float SENSITIVITY = 0.03f;
+const float SENSITIVITY = 0.02f;
 const float ZOOM = 45.0f;
 
 class Camera

@@ -87,7 +87,13 @@
 		<Unit filename="/home/dean/CLionProjects/lab01/Camera.h">
 			<Option target="lab01"/>
 		</Unit>
+		<Unit filename="/home/dean/CLionProjects/lab01/Object.h">
+			<Option target="lab01"/>
+		</Unit>
 		<Unit filename="/home/dean/CLionProjects/lab01/Shader.h">
+			<Option target="lab01"/>
+		</Unit>
+		<Unit filename="/home/dean/CLionProjects/lab01/Utils.h">
 			<Option target="lab01"/>
 		</Unit>
 		<Unit filename="/home/dean/CLionProjects/lab01/glad.c">

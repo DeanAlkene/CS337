@@ -1,20 +1,9 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "Utils.h"
 #include "Shader.h"
 #include "Camera.h"
-using namespace std;
+#include "Object.h"
 
-const int WINDOW_WIDTH = 1000;
-const int WINDOW_HEIGHT = 800;
-const float ALPHA = 0.6f;
+using namespace std;
 
 float lastX = WINDOW_WIDTH / 2.0f;
 float lastY = WINDOW_HEIGHT / 2.0f;
@@ -27,18 +16,25 @@ Camera camera(glm::vec3(0.0f, -0.1f, 2.0f));
 
 glm::vec3 lightPos(0.0f, 2.0f, 1.0f);
 
-vector<glm::vec3> vertices;
-vector<glm::vec3> normals;
-vector<glm::vec3> vertexAndNormal;
-vector<GLuint> faces;
-vector<GLuint> vertexNormCount;
+Object obj("./dragon.obj");
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window); //check if keyboard input ESC in the rendering loop
-void loadObj(const char* filename);
-void calculateNormal();
+
+void printMat4(const glm::mat4 &mat)
+{
+    for(auto i = 0; i < 4; i++)
+    {
+        for(auto j = 0; j < 4; j++)
+        {
+            cout << mat[i][j] << ' ';
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
 
 int main()
 {
@@ -73,9 +69,8 @@ int main()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 /*------------------------------------------------------------------*/
-    Shader shader("./lab01.vs", "./lab01.fs");
+    Shader shader("./vertex.glsl", "./fragment.glsl");
 /*------------------------------------------------------------------*/
-    loadObj("./dragon.obj");
     unsigned int VAO, VBO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO); //Create Vertex Buffer Object using Buffer ID = 1
@@ -84,11 +79,11 @@ int main()
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO); //Bind VBO to Buffer Type
-    glBufferData(GL_ARRAY_BUFFER, vertexAndNormal.size()*sizeof(vertexAndNormal[0]), vertexAndNormal.data(), GL_STATIC_DRAW); //Copy vertices to buffer memory use DYNAMIC/STREAM DRAW if it will change
+    glBufferData(GL_ARRAY_BUFFER, obj.vertexAndNormal.size()*sizeof(obj.vertexAndNormal[0]), obj.vertexAndNormal.data(), GL_STATIC_DRAW); //Copy vertices to buffer memory use DYNAMIC/STREAM DRAW if it will change
 
     //Index Drawing Optional
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size()*sizeof(faces[0]), faces.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj.faces.size()*sizeof(obj.faces[0]), obj.faces.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0); //How to explain vertex data
     glEnableVertexAttribArray(0);
@@ -101,7 +96,15 @@ int main()
     {
         //Keyboard Input
         processInput(window);
+        /*
+        map<float, glm::vec3> sorted;
+        for(auto i = 0; i < vertices.size(); ++i)
+        {
+            float distance = glm::length(camera.getPosition() - vertices[i]);
+            sorted[distance] = vertices[i];
 
+        }
+         */
         //Rendering Operations
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -113,8 +116,8 @@ int main()
         float blueValue = sin(timeValue) / 2.0f + 0.5f;
         float redValue = sin(timeValue + glm::three_over_two_pi<float>() / 2.0f) / 2.0f + 0.5f;
         float greenValue = sin(timeValue + glm::three_over_two_pi<float>()) / 2.0f + 0.5f;
-        //shader.setVec3("objColor", redValue, greenValue, blueValue);
-        shader.setVec3("objColor", 0.0f, 0.1f, 0.5f);
+        shader.setVec3("objColor", redValue, greenValue, blueValue);
+        //shader.setVec3("objColor", 0.0f, 0.1f, 0.5f);
         shader.setFloat("alpha", ALPHA);
         shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
         shader.setVec3("lightPos", lightPos);
@@ -127,6 +130,7 @@ int main()
         glm::mat4 view(1.0f);
         glm::mat4 projection(1.0f);
         //model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = obj.model;
         view = camera.getViewMatrix();
         projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
         shader.setMat4("model", model);
@@ -134,9 +138,19 @@ int main()
         shader.setMat4("projection", projection);
 
         glBindVertexArray(VAO);
-        //glDrawArrays(GL_TRIANGLES, 0, 3);
+        /*
+        for(auto it = sorted.rbegin(); it != sorted.rend(); ++it)
+        {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, it->second);
+            shader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
+         */
         //Index Drawing Optional
-        glDrawElements(GL_TRIANGLES, faces.size(), GL_UNSIGNED_INT, 0);
+        //glDepthMask(GL_FALSE);
+        glDrawElements(GL_TRIANGLES, obj.faces.size(), GL_UNSIGNED_INT, 0);
+        //glDepthMask(GL_TRUE);
         glBindVertexArray(0);
 
         glfwPollEvents();
@@ -166,7 +180,12 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    camera.processMouseMovement(xoffset, yoffset);
+    //if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
+    //    camera.processMouseMovement(xoffset, yoffset);
+    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
+        obj.processMouseDrag(LEFT_ONLY, xoffset, yoffset);
+    else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+        obj.processMouseDrag(LEFT_AND_RIGHT, xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
@@ -187,72 +206,4 @@ void processInput(GLFWwindow* window)
         camera.processKeyboard(LEFT, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         camera.processKeyboard(RIGHT, deltaTime);
-}
-
-void loadObj(const char* filename)
-{
-    ifstream in;
-    string line;
-    in.open(filename);
-    if(!in)
-    {
-        cerr << "Failed to open " << filename << endl;
-        exit(1);
-    }
-
-    while(getline(in, line))
-    {
-        if(line.substr(0,2) == "v ")
-        {
-            istringstream is(line.substr(2));
-            glm::vec3 v;
-            is >> v.x >> v.y >> v.z;
-            vertices.push_back(v);
-        }
-        else if(line.substr(0,2) == "f ")
-        {
-            istringstream is(line.substr(2));
-            GLuint a, b, c;
-            is >> a >> b >> c;
-            a--;
-            b--;
-            c--;
-            faces.push_back(a);
-            faces.push_back(b);
-            faces.push_back(c);
-        }
-    }
-    calculateNormal();
-    in.close();
-}
-
-void calculateNormal()
-{
-    normals.resize(vertices.size(), glm::vec3(0.0,0.0,0.0));
-    vertexNormCount.resize(vertices.size(), 0);
-    //vector<glm::vec3> planeNormals;
-    //planeNormals.resize(faces.size(), glm::vec3(0.0,0.0,0.0));
-    for(auto i = 0; i < faces.size(); i += 3)
-    {
-        GLuint x, y, z;
-        x = faces[i];
-        y = faces[i+1];
-        z = faces[i+2];
-        glm::vec3 n = glm::normalize(glm::cross((vertices[y]-vertices[x]),(vertices[z]-vertices[y])));
-        normals[x] += n;
-        normals[y] += n;
-        normals[z] += n;
-        vertexNormCount[x]++;
-        vertexNormCount[y]++;
-        vertexNormCount[z]++;
-    }
-    for(auto i = 0; i < vertices.size(); ++i)
-    {
-        normals[i] = glm::normalize(normals[i] / (float)vertexNormCount[i]);
-    }
-    for(auto i = 0; i < vertices.size(); ++i)
-    {
-        vertexAndNormal.push_back(vertices[i]);
-        vertexAndNormal.push_back(normals[i]);
-    }
 }

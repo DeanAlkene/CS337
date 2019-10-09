@@ -5,11 +5,8 @@
 #ifndef LAB01_SHADER_H
 #define LAB01_SHADER_H
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <glad/glad.h>
+#include "Utils.h"
+const float ALPHA = 0.9f;
 
 class Shader
 {
