@@ -87,6 +87,25 @@ private:
             vertexAndNormal.push_back(normals[i]);
         }
     }
+
+    float getDeltaAngle(float xoffset, float yoffset)
+    {
+        float dist = glm::length(glm::vec2(xoffset, yoffset));
+        float deltaAngle = fmodf(dist * 0.2, 360.0f);
+        /*
+        if(fabs(xoffset - 0.0f) <= 1e-9)
+        {
+            if(yoffset > 0.0f)
+                deltaAngle = 0.0f - deltaAngle;
+        }
+        else
+        {
+            if(xoffset < 0.0f)
+                deltaAngle = 0.0f - deltaAngle;
+        }
+         */
+        return deltaAngle;
+    }
 public:
     float angle;
     std::vector<glm::vec3> vertices;
@@ -94,16 +113,46 @@ public:
     std::vector<glm::vec3> vertexAndNormal;
     std::vector<GLuint> faces;
     std::vector<GLuint> vertexNormCount;
+    //glm::vec3 axis;
+    glm::mat4 rot;
     glm::mat4 model;
 
     Object(const char* filename)
     {
         angle = 0.0f;
+        rot = glm::mat4(1.0f);
         model = glm::mat4(1.0f);
+        //axis = glm::vec3(0.0f, 1.0f, 0.0f);
         loadObj(filename);
         calculateNormal();
     }
 
+    void processMouseDrag(CLICK_STATUS status, float xoffset, float yoffset)
+    {
+        if(status == LEFT_ONLY)
+        {
+            //glm::mat4 rot = glm::mat4(1.0f);
+            //rot = glm::rotate(rot, glm::radians(angle), axis);
+
+            glm::vec3 dir = glm::vec3(xoffset / (float)WINDOW_WIDTH, yoffset / (float)WINDOW_HEIGHT, 0.0f);
+            dir = glm::vec3(glm::inverse(rot) * glm::vec4(dir, 1.0f));
+            model = glm::translate(model, dir);
+        }
+        else if(status == LEFT_AND_RIGHT)
+        {
+            glm::vec3 axis = glm::vec3(-yoffset, xoffset, 0.0f);
+            //float dist = glm::length(glm::vec2(xoffset, yoffset));
+            float deltaAngle = getDeltaAngle(xoffset, yoffset);
+            std::cout << deltaAngle << std::endl;
+            glm::mat4 deltaRot = glm::mat4(1.0f);
+            deltaRot = glm::rotate(deltaRot, glm::radians(deltaAngle), axis);
+            rot = deltaRot * rot;
+            glm::vec3 actualAxis = glm::normalize(glm::vec3(glm::inverse(rot) * glm::vec4(axis, 1.0f)));
+            //std::cout << angle << std::endl;
+            model = glm::rotate(model, glm::radians(deltaAngle), actualAxis);
+        }
+    }
+    /*
     void processMouseDrag(CLICK_STATUS status, float xoffset, float yoffset)
     {
         if(status == LEFT_ONLY)
@@ -117,15 +166,15 @@ public:
         else if(status == LEFT_AND_RIGHT)
         {
             //glm::vec3 axis = glm::normalize(glm::vec3(-yoffset, xoffset, 0.0f));
-            //float dist = glm::length(glm::vec2(xoffset, yoffset));
-            float dist = xoffset;
-            float deltaAngle = fmodf(xoffset * 0.2, 360.0f);
+            float dist = glm::length(glm::vec2(xoffset, yoffset));
+            //float dist = xoffset;
+            float deltaAngle = fmodf(dist * 0.2, 360.0f);
             angle = fmodf(angle + deltaAngle, 360.0f);
             //std::cout << angle << std::endl;
             model = glm::rotate(model, glm::radians(deltaAngle), glm::vec3(0.0f, 1.0f, 0.0f));
         }
     }
-
+    */
 };
 
 #endif //LAB01_OBJECT_H
