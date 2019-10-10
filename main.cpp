@@ -180,9 +180,9 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    //if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
-    //    camera.processMouseMovement(xoffset, yoffset);
-    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
+    if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
+        camera.processMouseMovement(xoffset, yoffset);
+    else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
         obj.processMouseDrag(LEFT_ONLY, xoffset, yoffset);
     else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
         obj.processMouseDrag(LEFT_AND_RIGHT, xoffset, yoffset);
@@ -206,4 +206,8 @@ void processInput(GLFWwindow* window)
         camera.processKeyboard(LEFT, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         camera.processKeyboard(RIGHT, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+        camera.processKeyboard(Z, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+        camera.processKeyboard(X, deltaTime);
 }

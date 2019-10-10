@@ -6,7 +6,7 @@
 #define LAB01_SHADER_H
 
 #include "Utils.h"
-const float ALPHA = 0.9f;
+const float ALPHA = 1.0f;
 
 class Shader
 {

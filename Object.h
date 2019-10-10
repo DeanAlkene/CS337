@@ -9,8 +9,8 @@
 
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
-const float radius = 500.0f;
-const float diameter = 2 * radius;
+const float RADIUS = 500.0f;
+const float DIAMETER = 2 * RADIUS;
 
 enum CLICK_STATUS
 {
@@ -88,6 +88,7 @@ private:
         }
     }
 public:
+    float angle;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
     std::vector<glm::vec3> vertexAndNormal;
@@ -97,6 +98,7 @@ public:
 
     Object(const char* filename)
     {
+        angle = 0.0f;
         model = glm::mat4(1.0f);
         loadObj(filename);
         calculateNormal();
@@ -106,14 +108,21 @@ public:
     {
         if(status == LEFT_ONLY)
         {
+            glm::mat4 rot = glm::mat4(1.0f);
+            rot = glm::rotate(rot, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
             glm::vec3 dir = glm::vec3(xoffset / (float)WINDOW_WIDTH, yoffset / (float)WINDOW_HEIGHT, 0.0f);
+            dir = glm::vec3(glm::inverse(rot) * glm::vec4(dir, 1.0f));
             model = glm::translate(model, dir);
         }
         else if(status == LEFT_AND_RIGHT)
         {
-            glm::vec3 axis = glm::normalize(glm::vec3(-yoffset, xoffset, 0.0f));
-            float dist = glm::length(glm::vec2(xoffset, yoffset));
-            model = glm::rotate(model, 2*glm::asin(dist / diameter), axis);
+            //glm::vec3 axis = glm::normalize(glm::vec3(-yoffset, xoffset, 0.0f));
+            //float dist = glm::length(glm::vec2(xoffset, yoffset));
+            float dist = xoffset;
+            float deltaAngle = fmodf(xoffset * 0.2, 360.0f);
+            angle = fmodf(angle + deltaAngle, 360.0f);
+            //std::cout << angle << std::endl;
+            model = glm::rotate(model, glm::radians(deltaAngle), glm::vec3(0.0f, 1.0f, 0.0f));
         }
     }
 

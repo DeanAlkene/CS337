@@ -9,6 +9,8 @@
 /home/dean/CLionProjects/lab01/Camera.h
 Utils.h
 /home/dean/CLionProjects/lab01/Utils.h
+Object.h
+/home/dean/CLionProjects/lab01/Object.h
 
 /home/dean/CLionProjects/lab01/Object.h
 Utils.h
@@ -32,6 +34,8 @@ map
 iterator
 -
 string
+-
+cmath
 -
 glad/glad.h
 -
