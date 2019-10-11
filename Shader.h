@@ -6,7 +6,7 @@
 #define LAB01_SHADER_H
 
 #include "Utils.h"
-const float ALPHA = 1.0f;
+const float ALPHA = 0.5f;
 
 class Shader
 {
@@ -60,7 +60,7 @@ public:
         }
         catch (std::ifstream::failure &e)
         {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ" << std::endl;
+            std::cerr << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ" << std::endl;
         }
 
         const char* vShaderCode = vertexCode.c_str();

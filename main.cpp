@@ -23,19 +23,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window); //check if keyboard input ESC in the rendering loop
 
-void printMat4(const glm::mat4 &mat)
-{
-    for(auto i = 0; i < 4; i++)
-    {
-        for(auto j = 0; j < 4; j++)
-        {
-            cout << mat[i][j] << ' ';
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
-
 int main()
 {
     glfwInit();
@@ -63,7 +50,6 @@ int main()
         return -1;
     }
 
-    //glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -96,15 +82,7 @@ int main()
     {
         //Keyboard Input
         processInput(window);
-        /*
-        map<float, glm::vec3> sorted;
-        for(auto i = 0; i < vertices.size(); ++i)
-        {
-            float distance = glm::length(camera.getPosition() - vertices[i]);
-            sorted[distance] = vertices[i];
 
-        }
-         */
         //Rendering Operations
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -116,8 +94,8 @@ int main()
         float blueValue = sin(timeValue) / 2.0f + 0.5f;
         float redValue = sin(timeValue + glm::three_over_two_pi<float>() / 2.0f) / 2.0f + 0.5f;
         float greenValue = sin(timeValue + glm::three_over_two_pi<float>()) / 2.0f + 0.5f;
+
         shader.setVec3("objColor", redValue, greenValue, blueValue);
-        //shader.setVec3("objColor", 0.0f, 0.1f, 0.5f);
         shader.setFloat("alpha", ALPHA);
         shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
         shader.setVec3("lightPos", lightPos);
@@ -129,7 +107,7 @@ int main()
         glm::mat4 model(1.0f);
         glm::mat4 view(1.0f);
         glm::mat4 projection(1.0f);
-        //model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
         model = obj.model;
         view = camera.getViewMatrix();
         projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
@@ -138,19 +116,9 @@ int main()
         shader.setMat4("projection", projection);
 
         glBindVertexArray(VAO);
-        /*
-        for(auto it = sorted.rbegin(); it != sorted.rend(); ++it)
-        {
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, it->second);
-            shader.setMat4("model", model);
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-        }
-         */
-        //Index Drawing Optional
-        //glDepthMask(GL_FALSE);
+
         glDrawElements(GL_TRIANGLES, obj.faces.size(), GL_UNSIGNED_INT, 0);
-        //glDepthMask(GL_TRUE);
+
         glBindVertexArray(0);
 
         glfwPollEvents();
@@ -172,7 +140,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     {
         lastX = xpos;
         lastY = ypos;
-        firstMouse = false;
     }
 
     float xoffset = xpos - lastX;
@@ -183,9 +150,14 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
         camera.processMouseMovement(xoffset, yoffset);
     else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
-        obj.processMouseDrag(LEFT_ONLY, xoffset, yoffset);
+        obj.processMouseDrag(LEFT_ONLY, xoffset, yoffset, firstMouse);
     else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
-        obj.processMouseDrag(LEFT_AND_RIGHT, xoffset, yoffset);
+        obj.processMouseDrag(LEFT_AND_RIGHT, xoffset, yoffset, firstMouse);
+
+    if(firstMouse)
+    {
+        firstMouse = false;
+    }
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)

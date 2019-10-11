@@ -132,43 +132,6 @@ public:
         if(zoom > 100.0f)
             zoom = 100.0f;
     }
-
-    /*
-    void processMouseDrag(CLICK_STATUS status, float xoffset, float yoffset)
-    {
-        if(status == LEFT_ONLY)
-        {
-            glm::vec3 dir = glm::vec3(-xoffset / (float)WINDOW_WIDTH, -yoffset / (float)WINDOW_HEIGHT, 0.0f);
-            position += dir;
-        }
-        else if(status == LEFT_AND_RIGHT)
-        {
-            glm::vec3 axis = glm::vec3(-yoffset, xoffset, 0.0f);
-            axis = glm::normalize(axis);
-            float radius = glm::length(glm::cross(position, axis));
-            //float projectLength = glm::dot(position, axis);
-            float dist = glm::length(glm::vec2(xoffset, yoffset));
-            //float angle = 2*glm::asin(dist / (2 * glm::pi<float>() * radius));
-            float angle = glm::radians((float)dist * sensitivity * 2);
-            //std::cout << radius << std::endl;
-            //std::cout << dist << ' ' << radius << ' ' << angle << std::endl;
-            glm::mat4 rot(1.0f);
-            rot = glm::rotate(rot, angle, axis);
-            //glm::vec3 pos = glm::vec3(rot * glm::vec4(position, 1.0f));
-            //std::cout << pos.x << ' ' << pos.y << ' ' << pos.z << std::endl;
-            //position = pos;
-            position = glm::vec3(rot * glm::vec4(position, 1.0f));
-            worldUp = glm::normalize(glm::vec3(rot * glm::vec4(worldUp, 1.0f)));
-            update();
-
-            //glm::vec3 axis = glm::normalize(glm::vec3(-yoffset, xoffset, 0.0f));
-            //float dist = glm::length(glm::vec2(xoffset, yoffset));
-            //float dist = xoffset;
-            //float angle = 2*glm::asin(dist / diameter);
-            //model = glm::rotate(model, angle, glm::vec3(0.0f, 1.0f, 0.0f));
-        }
-    }
-     */
 };
 
 #endif //LAB01_CAMERA_H
