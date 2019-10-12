@@ -1,0 +1,6 @@
+[submodule "lab01"]
+	path = lab01
+	url = git@github.com:DeanAlkene/CS337.git
+[submodule "lab01_OIT"]
+	path = lab01_OIT
+	url = git@github.com:DeanAlkene/CS337.git
