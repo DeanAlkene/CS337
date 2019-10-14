@@ -8,28 +8,28 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/dean/CLionProjects/lab01/cmake-build-debug"/>
+				<Option working_dir="/home/dean/CS337/lab01/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/dean/CLionProjects/lab01/cmake-build-debug"/>
+				<Option working_dir="/home/dean/CS337/lab01/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="lab01">
-				<Option output="/home/dean/CLionProjects/lab01/cmake-build-debug/lab01" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/dean/CLionProjects/lab01/cmake-build-debug"/>
+				<Option output="/home/dean/CS337/lab01/cmake-build-debug/lab01" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dean/CS337/lab01/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -44,15 +44,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 lab01"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 lab01"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="lab01/fast">
-				<Option output="/home/dean/CLionProjects/lab01/cmake-build-debug/lab01" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/dean/CLionProjects/lab01/cmake-build-debug"/>
+				<Option output="/home/dean/CS337/lab01/cmake-build-debug/lab01" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dean/CS337/lab01/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -67,42 +67,42 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 lab01/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 lab01/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/dean/CLionProjects/lab01/cmake-build-debug"/>
+				<Option working_dir="/home/dean/CS337/lab01/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CLionProjects/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/dean/CS337/lab01/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/dean/CLionProjects/lab01/Camera.h">
+		<Unit filename="/home/dean/CS337/lab01/Camera.h">
 			<Option target="lab01"/>
 		</Unit>
-		<Unit filename="/home/dean/CLionProjects/lab01/Object.h">
+		<Unit filename="/home/dean/CS337/lab01/Object.h">
 			<Option target="lab01"/>
 		</Unit>
-		<Unit filename="/home/dean/CLionProjects/lab01/Shader.h">
+		<Unit filename="/home/dean/CS337/lab01/Shader.h">
 			<Option target="lab01"/>
 		</Unit>
-		<Unit filename="/home/dean/CLionProjects/lab01/Utils.h">
+		<Unit filename="/home/dean/CS337/lab01/Utils.h">
 			<Option target="lab01"/>
 		</Unit>
-		<Unit filename="/home/dean/CLionProjects/lab01/glad.c">
+		<Unit filename="/home/dean/CS337/lab01/glad.c">
 			<Option target="lab01"/>
 		</Unit>
-		<Unit filename="/home/dean/CLionProjects/lab01/main.cpp">
+		<Unit filename="/home/dean/CS337/lab01/main.cpp">
 			<Option target="lab01"/>
 		</Unit>
-		<Unit filename="/home/dean/CLionProjects/lab01/CMakeLists.txt">
+		<Unit filename="/home/dean/CS337/lab01/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

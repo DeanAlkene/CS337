@@ -6,21 +6,21 @@
 
 #IncludeRegexTransform: 
 
-/home/dean/CLionProjects/lab01/Camera.h
+/home/dean/CS337/lab01_OIT/Camera.h
 Utils.h
-/home/dean/CLionProjects/lab01/Utils.h
+/home/dean/CS337/lab01_OIT/Utils.h
 Object.h
-/home/dean/CLionProjects/lab01/Object.h
+/home/dean/CS337/lab01_OIT/Object.h
 
-/home/dean/CLionProjects/lab01/Object.h
+/home/dean/CS337/lab01_OIT/Object.h
 Utils.h
-/home/dean/CLionProjects/lab01/Utils.h
+/home/dean/CS337/lab01_OIT/Utils.h
 
-/home/dean/CLionProjects/lab01/Shader.h
+/home/dean/CS337/lab01_OIT/Shader.h
 Utils.h
-/home/dean/CLionProjects/lab01/Utils.h
+/home/dean/CS337/lab01_OIT/Utils.h
 
-/home/dean/CLionProjects/lab01/Utils.h
+/home/dean/CS337/lab01_OIT/Utils.h
 iostream
 -
 fstream
@@ -48,13 +48,13 @@ glm/gtc/matrix_transform.hpp
 glm/gtc/type_ptr.hpp
 -
 
-/home/dean/CLionProjects/lab01/main.cpp
+/home/dean/CS337/lab01_OIT/main.cpp
 Utils.h
-/home/dean/CLionProjects/lab01/Utils.h
+/home/dean/CS337/lab01_OIT/Utils.h
 Shader.h
-/home/dean/CLionProjects/lab01/Shader.h
+/home/dean/CS337/lab01_OIT/Shader.h
 Camera.h
-/home/dean/CLionProjects/lab01/Camera.h
+/home/dean/CS337/lab01_OIT/Camera.h
 Object.h
-/home/dean/CLionProjects/lab01/Object.h
+/home/dean/CS337/lab01_OIT/Object.h
 

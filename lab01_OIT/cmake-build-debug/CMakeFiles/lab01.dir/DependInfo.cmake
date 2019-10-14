@@ -5,7 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/dean/CLionProjects/lab01/glad.c" "/home/dean/CLionProjects/lab01/cmake-build-debug/CMakeFiles/lab01.dir/glad.c.o"
+  "/home/dean/CS337/lab01_OIT/glad.c" "/home/dean/CS337/lab01_OIT/cmake-build-debug/CMakeFiles/lab01.dir/glad.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
@@ -13,7 +13,7 @@ set(CMAKE_C_COMPILER_ID "GNU")
 set(CMAKE_C_TARGET_INCLUDE_PATH
   )
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/dean/CLionProjects/lab01/main.cpp" "/home/dean/CLionProjects/lab01/cmake-build-debug/CMakeFiles/lab01.dir/main.cpp.o"
+  "/home/dean/CS337/lab01_OIT/main.cpp" "/home/dean/CS337/lab01_OIT/cmake-build-debug/CMakeFiles/lab01.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

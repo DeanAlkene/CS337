@@ -6,3 +6,19 @@
 
 #IncludeRegexTransform: 
 
+/home/dean/CS337/lab01_OIT/glad.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+glad/glad.h
+-
+windows.h
+-
+winapifamily.h
+-
+dlfcn.h
+-
+
