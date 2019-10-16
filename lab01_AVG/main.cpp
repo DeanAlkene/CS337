@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Object.h"
+
 using namespace std;
 
 float lastX = WINDOW_WIDTH / 2.0f;
@@ -16,17 +17,12 @@ Camera camera(glm::vec3(0.0f, -0.1f, 2.0f));
 glm::vec3 lightPos(0.0f, 2.0f, 1.0f);
 
 Object obj("./dragon.obj");
+Object screen("./screen.obj");
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window); //check if keyboard input ESC in the rendering loop
-void oitInitializer(GLuint &list_build_program,
-                    GLuint &head_pointer_texture,
-                    GLuint &head_pointer_clear_buffer,
-                    GLuint &atomic_counter_buffer,
-                    GLuint &linked_list_buffer,
-                    GLuint &linked_list_texture);
 
 int main()
 {
@@ -54,30 +50,11 @@ int main()
         cerr << "Failed to initialize GLAD" << endl;
         return -1;
     }
-
-    //glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 /*------------------------------------------------------------------*/
-    Shader renderShader("./vertex.glsl", "./fragment.glsl");
+    Shader shader("./vertex.glsl", "./fragment.glsl");
     Shader resolveShader("./resolve_vertex.glsl", "./resolve_fragment.glsl");
 /*------------------------------------------------------------------*/
-    GLuint  list_build_program;
-    GLuint  head_pointer_texture;
-    GLuint  head_pointer_clear_buffer;
-    GLuint  atomic_counter_buffer;
-    GLuint  linked_list_buffer;
-    GLuint  linked_list_texture;
-
-    oitInitializer(list_build_program,
-            head_pointer_texture,
-            head_pointer_clear_buffer,
-            atomic_counter_buffer,
-            linked_list_buffer,
-            linked_list_texture);
-
-    unsigned int VAO, VBO, EBO;
+    unsigned int VAO, VBO, EBO, quadVAO, quadVBO, quadEBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO); //Create Vertex Buffer Object using Buffer ID = 1
     glGenBuffers(1, &EBO);
@@ -93,11 +70,47 @@ int main()
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0); //How to explain vertex data
     glEnableVertexAttribArray(0);
-
+    
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    glClearDepth(1.0f);
+    glGenVertexArrays(1, &quadVAO);
+    glGenBuffers(1, &quadVBO); //Create Vertex Buffer Object using Buffer ID = 1
+    glGenBuffers(1, &quadEBO);
+
+    glBindVertexArray(quadVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, quadVBO); //Bind VBO to Buffer Type
+    glBufferData(GL_ARRAY_BUFFER, screen.vertices.size()*sizeof(screen.vertices[0]), screen.vertices.data(), GL_STATIC_DRAW); //Copy vertices to buffer memory use DYNAMIC/STREAM DRAW if it will change
+
+    //Index Drawing Optional
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, screen.faces.size()*sizeof(screen.faces[0]), screen.faces.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); //How to explain vertex data
+    glEnableVertexAttribArray(0);
+/*------------------------------------------------------------------*/
+    unsigned int texture, FBO;
+
+    glGenFramebuffers(1, &FBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+
+    glGenTextures(1, &texture);
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+	             GL_RGBA32F,
+				 WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+							  GL_TEXTURE_2D, texture, 0);
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 /*------------------------------------------------------------------*/
 
     while(!glfwWindowShouldClose(window))
@@ -105,46 +118,28 @@ int main()
         //Keyboard Input
         processInput(window);
 
-        /*----------------------WARNING---------------------------*/
-        GLuint * data;
-
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        /*----------------------WARNING---------------------------*/
-
         //Rendering Operations
+        glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        /*----------------------WARNING---------------------------*/
-        // Reset atomic counter
-        glBindBufferBase(GL_ATOMIC_COUNTER_BUFFER, 0, atomic_counter_buffer);
-        data = (GLuint *)glMapBuffer(GL_ATOMIC_COUNTER_BUFFER, GL_WRITE_ONLY);
-        data[0] = 0;
-        glUnmapBuffer(GL_ATOMIC_COUNTER_BUFFER);
+        glBlendEquation(GL_FUNC_ADD);
+        glBlendFunc(GL_ONE, GL_ONE);
+        glEnable(GL_BLEND);
 
-        // Clear head-pointer image
-        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, head_pointer_clear_buffer);
-        glBindTexture(GL_TEXTURE_2D, head_pointer_texture);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
-        glBindTexture(GL_TEXTURE_2D, 0);
-
-
-        /*----------------------WARNING---------------------------*/
-
-        renderShader.activate();
-
+        shader.activate();
         //Color changing respected to time, using uniform
         float timeValue = glfwGetTime();
         float blueValue = sin(timeValue) / 2.0f + 0.5f;
         float redValue = sin(timeValue + glm::three_over_two_pi<float>() / 2.0f) / 2.0f + 0.5f;
         float greenValue = sin(timeValue + glm::three_over_two_pi<float>()) / 2.0f + 0.5f;
 
-        renderShader.setVec3("objColor", redValue, greenValue, blueValue);
-        renderShader.setFloat("alpha", ALPHA);
-        renderShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-        renderShader.setVec3("lightPos", lightPos);
-        renderShader.setVec3("viewPos", camera.getPosition());
+        shader.setVec3("objColor", redValue, greenValue, blueValue);
+        shader.setFloat("alpha", ALPHA);
+        shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        shader.setVec3("lightPos", lightPos);
+        shader.setVec3("viewPos", camera.getPosition());
 
         deltaTime = timeValue - lastFrame;
         lastFrame = timeValue;
@@ -156,91 +151,37 @@ int main()
         model = obj.model;
         view = camera.getViewMatrix();
         projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
-        renderShader.setMat4("model", model);
-        renderShader.setMat4("view", view);
-        renderShader.setMat4("projection", projection);
-
-        /*----------------------WARNING---------------------------*/
-
-        /*----------------------WARNING---------------------------*/
+        shader.setMat4("model", model);
+        shader.setMat4("view", view);
+        shader.setMat4("projection", projection);
 
         glBindVertexArray(VAO);
-
         glDrawElements(GL_TRIANGLES, obj.faces.size(), GL_UNSIGNED_INT, 0);
-
         glBindVertexArray(0);
-
         glUseProgram(0);
 
-        resolveShader.activate();
-
-        glBindVertexArray(VAO);
-
-        glDrawElements(GL_TRIANGLES, obj.faces.size(), GL_UNSIGNED_INT, 0);
-
-        glBindVertexArray(0);
-
-        // Bind head-pointer image for read-write
-        glBindImageTexture(0, head_pointer_texture, 0, GL_FALSE, 0, GL_READ_WRITE, GL_R32UI);
-
-        // Bind linked-list buffer for write
-        glBindImageTexture(1, linked_list_texture, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32UI);
-
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        
         glDisable(GL_DEPTH_TEST);
-        glDisable(GL_CULL_FACE);
+        glDisable(GL_BLEND);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        resolveShader.activate();
+        
+        resolveShader.setInt("screenTexture", 0);
 
+        glBindVertexArray(quadVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glDrawElements(GL_TRIANGLES, screen.faces.size(), GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+        
         glfwPollEvents();
         glfwSwapBuffers(window);
     }
 
     glfwTerminate();
     return 0;
-}
-
-void oitInitializer(GLuint &list_build_program,
-                    GLuint &head_pointer_texture,
-                    GLuint &head_pointer_clear_buffer,
-                    GLuint &atomic_counter_buffer,
-                    GLuint &linked_list_buffer,
-                    GLuint &linked_list_texture)
-{
-    GLuint * data;
-    glActiveTexture(GL_TEXTURE0);
-    glGenTextures(1, &head_pointer_texture);
-    glBindTexture(GL_TEXTURE_2D, head_pointer_texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, MAX_FRAMEBUFFER_WIDTH, MAX_FRAMEBUFFER_HEIGHT, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    glBindImageTexture(0, head_pointer_texture, 0, GL_TRUE, 0, GL_READ_WRITE, GL_R32UI);
-
-    // Create buffer for clearing the head pointer texture
-    glGenBuffers(1, &head_pointer_clear_buffer);
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, head_pointer_clear_buffer);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER, MAX_FRAMEBUFFER_WIDTH * MAX_FRAMEBUFFER_HEIGHT * sizeof(GLuint), NULL, GL_STATIC_DRAW);
-    data = (GLuint *)glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY);
-    memset(data, 0xFF, MAX_FRAMEBUFFER_WIDTH * MAX_FRAMEBUFFER_HEIGHT * sizeof(GLuint));
-    glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
-
-    // Create the atomic counter buffer
-    glGenBuffers(1, &atomic_counter_buffer);
-    glBindBuffer(GL_ATOMIC_COUNTER_BUFFER, atomic_counter_buffer);
-    glBufferData(GL_ATOMIC_COUNTER_BUFFER, sizeof(GLuint), NULL, GL_DYNAMIC_COPY);
-
-    // Create the linked list storage buffer
-    glGenBuffers(1, &linked_list_buffer);
-    glBindBuffer(GL_TEXTURE_BUFFER, linked_list_buffer);
-    glBufferData(GL_TEXTURE_BUFFER, MAX_FRAMEBUFFER_WIDTH * MAX_FRAMEBUFFER_HEIGHT * 3 * sizeof(glm::vec4), NULL, GL_DYNAMIC_COPY);
-    glBindBuffer(GL_TEXTURE_BUFFER, 0);
-
-    // Bind it to a texture (for use as a TBO)
-    glGenTextures(1, &linked_list_texture);
-    glBindTexture(GL_TEXTURE_BUFFER, linked_list_texture);
-    glTexBuffer(GL_TEXTURE_BUFFER, GL_RGBA32UI, linked_list_buffer);
-    glBindTexture(GL_TEXTURE_BUFFER, 0);
-
-    glBindImageTexture(1, linked_list_texture, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32UI);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -269,7 +210,9 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
         obj.processMouseDrag(LEFT_AND_RIGHT, xoffset, yoffset, firstMouse);
 
     if(firstMouse)
+    {
         firstMouse = false;
+    }
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
