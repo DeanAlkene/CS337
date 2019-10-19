@@ -2,8 +2,8 @@
 // Created by dean on 19-10-6.
 //
 
-#ifndef LAB01_SHADER_H
-#define LAB01_SHADER_H
+#ifndef LAB02_SHADER_H
+#define LAB02_SHADER_H
 
 #include "Utils.h"
 const float ALPHA = 1.0f;
@@ -152,4 +152,4 @@ public:
     }
 };
 
-#endif //LAB01_SHADER_H
+#endif //LAB02_SHADER_H

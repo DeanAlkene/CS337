@@ -7,5 +7,6 @@ CMakeFiles/lab01.dir/main.cpp.o: ../Camera.h
 CMakeFiles/lab01.dir/main.cpp.o: ../Object.h
 CMakeFiles/lab01.dir/main.cpp.o: ../Shader.h
 CMakeFiles/lab01.dir/main.cpp.o: ../Utils.h
+CMakeFiles/lab01.dir/main.cpp.o: ../Window.h
 CMakeFiles/lab01.dir/main.cpp.o: ../main.cpp
 

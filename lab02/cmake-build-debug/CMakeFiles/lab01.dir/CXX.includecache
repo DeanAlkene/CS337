@@ -48,6 +48,10 @@ glm/gtc/matrix_transform.hpp
 glm/gtc/type_ptr.hpp
 -
 
+/home/dean/CS337/lab02/Window.h
+Utils.h
+/home/dean/CS337/lab02/Utils.h
+
 /home/dean/CS337/lab02/main.cpp
 Utils.h
 /home/dean/CS337/lab02/Utils.h
@@ -57,4 +61,6 @@ Camera.h
 /home/dean/CS337/lab02/Camera.h
 Object.h
 /home/dean/CS337/lab02/Object.h
+Window.h
+/home/dean/CS337/lab02/Window.h
 

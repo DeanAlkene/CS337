@@ -2,8 +2,8 @@
 // Created by dean on 19-10-6.
 //
 
-#ifndef LAB01_CAMERA_H
-#define LAB01_CAMERA_H
+#ifndef LAB02_CAMERA_H
+#define LAB02_CAMERA_H
 
 #include "Utils.h"
 #include "Object.h"
@@ -151,4 +151,4 @@ public:
     }
 };
 
-#endif //LAB01_CAMERA_H
+#endif //LAB02_CAMERA_H

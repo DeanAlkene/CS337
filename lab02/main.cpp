@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Object.h"
+#include "Window.h"
 
 using namespace std;
 
@@ -26,31 +27,13 @@ void processInput(GLFWwindow* window); //check if keyboard input ESC in the rend
 
 int main()
 {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    Window window("Running Kart");
 
-    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Running Kart", NULL, NULL);
-    if(!window)
-    {
-        cerr << "Failed to create window!" << endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, mouse_callback);
-    glfwSetScrollCallback(window, scroll_callback);
-
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-    if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
-    {
-        cerr << "Failed to initialize GLAD" << endl;
-        return -1;
-    }
-
+    glfwSetFramebufferSizeCallback(window.getWindow(), framebuffer_size_callback);
+    glfwSetCursorPosCallback(window.getWindow(), mouse_callback);
+    glfwSetScrollCallback(window.getWindow(), scroll_callback);
+    window.disableCursor();
+    
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -62,10 +45,10 @@ int main()
     road.drawInit();
 /*------------------------------------------------------------------*/
 
-    while(!glfwWindowShouldClose(window))
+    while(!glfwWindowShouldClose(window.getWindow()))
     {
         //Keyboard Input
-        processInput(window);
+        processInput(window.getWindow());
 
         //Rendering Operations
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -109,7 +92,7 @@ int main()
         road.unbindArray();
 
         glfwPollEvents();
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(window.getWindow());
     }
 
     glfwTerminate();

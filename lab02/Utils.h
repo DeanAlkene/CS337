@@ -2,8 +2,8 @@
 // Created by dean on 19-10-9.
 //
 
-#ifndef LAB01_UTILS_H
-#define LAB01_UTILS_H
+#ifndef LAB02_UTILS_H
+#define LAB02_UTILS_H
 
 #include <iostream>
 #include <fstream>
@@ -19,4 +19,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#endif //LAB01_UTILS_H
+const int WINDOW_WIDTH = 1000;
+const int WINDOW_HEIGHT = 800;
+
+#endif //LAB02_UTILS_H

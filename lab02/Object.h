@@ -2,13 +2,10 @@
 // Created by dean on 19-10-9.
 //
 
-#ifndef LAB01_OBJECT_H
-#define LAB01_OBJECT_H
+#ifndef LAB02_OBJECT_H
+#define LAB02_OBJECT_H
 
 #include "Utils.h"
-
-const int WINDOW_WIDTH = 1000;
-const int WINDOW_HEIGHT = 800;
 
 enum CLICK_STATUS
 {
@@ -250,4 +247,4 @@ public:
     }
 };
 
-#endif //LAB01_OBJECT_H
+#endif //LAB02_OBJECT_H
