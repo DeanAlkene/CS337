@@ -1,0 +1,458 @@
+# Blender MTL File: 'None'
+# Material Count: 43
+
+newmtl F3MClarenAil_032AvHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/AilAVMaclaren.jpg
+
+newmtl F3MClarenGrisclairtextureHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.665098 0.665098 0.665098
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarenNoirDDsideHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.047059 0.047059 0.047059
+Ks 0.200000 0.200000 0.200000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarenNoirHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.047059 0.047059 0.047059
+Ks 0.200000 0.200000 0.200000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarenair_032Box_032LHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/AirboxLHakkinen.jpg
+
+newmtl F3MClarenair_032Box_032RHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/AirboxRHakkinen.jpg
+
+newmtl F3MClarenbasdecaisHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.164706 0.164706 0.164706
+Ks 0.200000 0.200000 0.200000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarencameraHakkinen.001
+Ns 304.436989
+Ka 1.000000 1.000000 1.000000
+Kd 0.112941 0.112941 0.112941
+Ks 0.560000 0.560000 0.560000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarencamertextureHakkinen.001
+Ns 63.999992
+Ka 1.000000 1.000000 1.000000
+Kd 0.666667 0.666667 0.666667
+Ks 0.100000 0.100000 0.100000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/camera.jpg
+
+newmtl F3MClarenchrome_032antHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.521569 0.521569 0.521569
+Ks 1.200000 1.200000 1.200000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarencloisAV_032drHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.602353 0.618039 0.069020
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/CloisAVGAMaclaren.jpg
+
+newmtl F3MClarenclois_032AV_032gaHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.762353 0.436078 0.756078
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/CloisAVGAMaclaren.jpg
+
+newmtl F3MClarencloisona_032drHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.341961 0.341961 0.341961
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/cloisonaDRHakkinen.jpg
+
+newmtl F3MClarencloisona_032gaHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.341961 0.341961 0.341961
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/cloisonaGAHakkinen.jpg
+
+newmtl F3MClarendeflectColorHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.665098 0.665098 0.665098
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarendeflectDHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/DeflectDRMaclaren.jpg
+
+newmtl F3MClarendeflectGHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/DeflectGAMaclaren.jpg
+
+newmtl F3MClareneuArriereHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.694118 0.172549 0.172549
+Ks 0.200000 0.200000 0.200000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarenflanDHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.112941 0.112941 0.112941
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/FlanDmaclaren.jpg
+
+newmtl F3MClarenflanGHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/FlanGmaclaren.jpg
+
+newmtl F3MClarenflap_032avHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.254118 0.285490 0.574118
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/FlapAVHakkinen.jpg
+
+newmtl F3MClarenflaps_032AR1Hakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/FlapARmaclaren.jpg
+
+newmtl F3MClarenflaps_032ARHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/FlapARmaclaren.jpg
+
+newmtl F3MClareninterieurHakkinen.001
+Ns 93.701487
+Ka 1.000000 1.000000 1.000000
+Kd 0.156863 0.156863 0.156863
+Ks 0.125000 0.125000 0.125000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClareniretroacier1Hakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.665098 0.665098 0.665098
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/retrotextureMaclaren.jpg
+
+newmtl F3MClarennezDmapHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/NezmapDmaclarentest.jpg
+
+newmtl F3MClarennezGmapHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/NezmapGmaclarentest.jpg
+
+newmtl F3MClarennezmapHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.430000 0.430000 0.430000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/nezmapHakkinen.jpg
+
+newmtl F3MClarenplastique_032ntenneHakkinen.001
+Ns 63.999992
+Ka 1.000000 1.000000 1.000000
+Kd 0.317647 0.317647 0.317647
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarenpontotoHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.112941 0.112941 0.112941
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/pontotomaclaren.jpg
+
+newmtl F3MClarensuspensionsHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.153725 0.153725 0.153725
+Ks 0.320000 0.320000 0.320000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MClarentexturepetitaileronDRHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.549020 0.549020 0.549020
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/TxturpttaileronDmaclaren.jpg
+
+newmtl F3MClarentexturepetitaileronGAHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.549020 0.549020 0.549020
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/TxturpttaileronDmaclaren.jpg
+
+newmtl F3MclarenJantes2arrows.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.060235 0.060235 0.060235
+Ks 0.520000 0.520000 0.520000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl F3MclarenJpneuarrier1.001
+Ns 15.999998
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.005000 0.005000 0.005000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/Ferraripneus.jpg
+
+newmtl F3MclarenJpneuarrier2.001
+Ns 15.999998
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.005000 0.005000 0.005000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/Ferraripneus.jpg
+
+newmtl F3MclarenJpneusavant1.001
+Ns 15.999998
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.005000 0.005000 0.005000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/Ferraripneus.jpg
+
+newmtl F3MclarenJpneusavant2.001
+Ns 15.999998
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.005000 0.005000 0.005000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/dean/CS337/Models/F1_Mclaren/Ferraripneus.jpg
+
+newmtl F3Mclarenaerationspneus.001
+Ns 15.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.160000 0.160000 0.160000
+Ks 0.050000 0.050000 0.050000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 0.990000
+illum 9
+
+newmtl F3fMClarentextureHakkinen.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.665098 0.665098 0.665098
+Ks 0.460000 0.460000 0.460000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl FMClarenretroglassHakkinen.001
+Ns 15.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.356863 0.356863 0.356863
+Ks 1.000000 1.000000 1.000000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl f3Mclarenfreinsglow.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.843137 0.494118 0.184314
+Ks 0.200000 0.200000 0.200000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl f3Mclarenjantesorange.001
+Ns 255.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.665098 0.665098 0.665098
+Ks 0.490000 0.490000 0.490000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2

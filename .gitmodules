@@ -7,3 +7,6 @@
 [submodule "lab01_AVG"]
 	path = lab01_AVG
 	url = git@github.com:DeanAlkene/CS337.git
+[submodule "lab02"]
+	path = lab02
+	url = /lab02
