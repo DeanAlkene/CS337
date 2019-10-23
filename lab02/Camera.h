@@ -1,5 +1,5 @@
 //
-// Created by dean on 19-10-6.
+// Created by dean on 19-10-20.
 //
 
 #ifndef LAB02_CAMERA_H
@@ -20,7 +20,7 @@ enum Movement
 
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
-const float SPEED = 0.5f;
+const float SPEED = 10.0f;
 const float SENSITIVITY = 0.015f;
 const float ZOOM = 45.0f;
 
@@ -53,7 +53,7 @@ private:
     }
 public:
     Camera(glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 frt = glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3 worldup = glm::vec3(0.0f, 1.0f, 0.0f), float Yaw = YAW, float Pitch = PITCH)
-    :roll(0.0f), moveSpeed(SPEED), sensitivity(SENSITIVITY), zoom(ZOOM)
+            :roll(0.0f), moveSpeed(SPEED), sensitivity(SENSITIVITY), zoom(ZOOM)
     {
         position = pos;
         front = frt;
@@ -64,7 +64,7 @@ public:
     }
 
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float Yaw = YAW, float Pitch = PITCH)
-    :roll(0.0f), front(glm::vec3(0.0f, 0.0f, -1.0f)), moveSpeed(SPEED), sensitivity(SENSITIVITY), zoom(ZOOM)
+            :roll(0.0f), front(glm::vec3(0.0f, 0.0f, -1.0f)), moveSpeed(SPEED), sensitivity(SENSITIVITY), zoom(ZOOM)
     {
         position = glm::vec3(posX, posY, posZ);
         worldUp = glm::vec3(upX, upY, upZ);

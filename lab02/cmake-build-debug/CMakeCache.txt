@@ -150,7 +150,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=lab01
+CMAKE_PROJECT_NAME:STATIC=lab02
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -216,12 +216,6 @@ ProcessorCount_cmd_getconf:FILEPATH=/usr/bin/getconf
 
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/sbin/sysctl
-
-//Value Computed by CMake
-lab01_BINARY_DIR:STATIC=/home/dean/CS337/lab02/cmake-build-debug
-
-//Value Computed by CMake
-lab01_SOURCE_DIR:STATIC=/home/dean/CS337/lab02
 
 //Value Computed by CMake
 lab02_BINARY_DIR:STATIC=/home/dean/CS337/lab02/cmake-build-debug

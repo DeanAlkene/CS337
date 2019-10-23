@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named lab01
+# Target rules for targets named lab02
 
 # Build rule for target.
-lab01: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 lab01
-.PHONY : lab01
+lab02: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 lab02
+.PHONY : lab02
 
 # fast build rule for target.
-lab01/fast:
-	$(MAKE) -f CMakeFiles/lab01.dir/build.make CMakeFiles/lab01.dir/build
-.PHONY : lab01/fast
+lab02/fast:
+	$(MAKE) -f CMakeFiles/lab02.dir/build.make CMakeFiles/lab02.dir/build
+.PHONY : lab02/fast
 
 glad.o: glad.c.o
 
@@ -129,7 +129,7 @@ glad.o: glad.c.o
 
 # target to build an object file
 glad.c.o:
-	$(MAKE) -f CMakeFiles/lab01.dir/build.make CMakeFiles/lab01.dir/glad.c.o
+	$(MAKE) -f CMakeFiles/lab02.dir/build.make CMakeFiles/lab02.dir/glad.c.o
 .PHONY : glad.c.o
 
 glad.i: glad.c.i
@@ -138,7 +138,7 @@ glad.i: glad.c.i
 
 # target to preprocess a source file
 glad.c.i:
-	$(MAKE) -f CMakeFiles/lab01.dir/build.make CMakeFiles/lab01.dir/glad.c.i
+	$(MAKE) -f CMakeFiles/lab02.dir/build.make CMakeFiles/lab02.dir/glad.c.i
 .PHONY : glad.c.i
 
 glad.s: glad.c.s
@@ -147,7 +147,7 @@ glad.s: glad.c.s
 
 # target to generate assembly for a file
 glad.c.s:
-	$(MAKE) -f CMakeFiles/lab01.dir/build.make CMakeFiles/lab01.dir/glad.c.s
+	$(MAKE) -f CMakeFiles/lab02.dir/build.make CMakeFiles/lab02.dir/glad.c.s
 .PHONY : glad.c.s
 
 main.o: main.cpp.o
@@ -156,7 +156,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/lab01.dir/build.make CMakeFiles/lab01.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/lab02.dir/build.make CMakeFiles/lab02.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -165,7 +165,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/lab01.dir/build.make CMakeFiles/lab01.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/lab02.dir/build.make CMakeFiles/lab02.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -174,7 +174,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/lab01.dir/build.make CMakeFiles/lab01.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/lab02.dir/build.make CMakeFiles/lab02.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -184,7 +184,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... lab01"
+	@echo "... lab02"
 	@echo "... edit_cache"
 	@echo "... glad.o"
 	@echo "... glad.i"

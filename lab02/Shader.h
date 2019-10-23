@@ -1,5 +1,5 @@
 //
-// Created by dean on 19-10-6.
+// Created by dean on 19-10-20.
 //
 
 #ifndef LAB02_SHADER_H
@@ -89,6 +89,11 @@ public:
     void activate()
     {
         glUseProgram(shaderProgram);
+    }
+
+    void deactivate()
+    {
+        glUseProgram(0);
     }
 
     void setBool(const std::string &name, bool value) const

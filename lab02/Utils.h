@@ -1,5 +1,5 @@
 //
-// Created by dean on 19-10-9.
+// Created by dean on 19-10-20.
 //
 
 #ifndef LAB02_UTILS_H
@@ -18,8 +18,15 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
-const int WINDOW_WIDTH = 1000;
-const int WINDOW_HEIGHT = 800;
+#define STB_IMAGE_IMPLEMENTATION
+
+#include "stb_image.h"
+
+const int WINDOW_WIDTH = 1500;
+const int WINDOW_HEIGHT = 1200;
 
 #endif //LAB02_UTILS_H

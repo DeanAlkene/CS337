@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Object.h"
-#include "Window.h"
+#include "Skybox.h"
 
 using namespace std;
 
@@ -13,12 +13,9 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 bool firstMouse = true;
 
-Camera camera(glm::vec3(0.0f, 1.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 
-glm::vec3 lightPos(0.0f, 5.0f, 0.0f);
-
-Object car("./Car2.obj");
-Object road("./StraightRoad.obj");
+glm::vec3 lightPos[2] = {glm::vec3(0.5f, 1.0f, 1.0f), glm::vec3(-0.5f, 1.0f, 1.0f)};
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -27,72 +24,133 @@ void processInput(GLFWwindow* window); //check if keyboard input ESC in the rend
 
 int main()
 {
-    Window window("Running Kart");
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    glfwSetFramebufferSizeCallback(window.getWindow(), framebuffer_size_callback);
-    glfwSetCursorPosCallback(window.getWindow(), mouse_callback);
-    glfwSetScrollCallback(window.getWindow(), scroll_callback);
-    window.disableCursor();
-    
+    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Running Kart", NULL, NULL);
+    if(!window)
+    {
+        cerr << "Failed to create window!" << endl;
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
+    {
+        cerr << "Failed to initialize GLAD" << endl;
+        return -1;
+    }
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 /*------------------------------------------------------------------*/
-    Shader shader("./vertex.glsl", "./fragment.glsl");
+    Shader shader_static("./vertex.glsl", "./fragment.glsl");
+    Shader shader_car("./vertex.glsl", "./fragment_NT.glsl");
+    Shader shader_skybox("./vertex_skb.glsl", "./fragment_skb.glsl");
 /*------------------------------------------------------------------*/
-    car.drawInit();
-    road.drawInit();
+    Object road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj"));
+    Object car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"));
+    Object lights(std::string("/home/dean/CS337/Models/Scene/Lights.obj"));
+    Object stopSigns(std::string("/home/dean/CS337/Models/Scene/StopSign/StopSign.obj"));
+    Object speedLimit(std::string("/home/dean/CS337/Models/Scene/SpeedLimit/SpeedLimit.obj"));
+    Object trafficLight(std::string("/home/dean/CS337/Models/Scene/trafficlight/trafficlight.obj"));
+    Object trees(std::string("/home/dean/CS337/Models/Scene/Palm/Palm.obj"));
+    Skybox skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga"));
 /*------------------------------------------------------------------*/
 
-    while(!glfwWindowShouldClose(window.getWindow()))
+    while(!glfwWindowShouldClose(window))
     {
         //Keyboard Input
-        processInput(window.getWindow());
+        processInput(window);
 
         //Rendering Operations
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        shader.activate();
-
-        //Color changing respected to time, using uniform
         float timeValue = glfwGetTime();
-
-        shader.setVec3("objColor", 0.9f, 0.9f, 0.9f);
-        shader.setFloat("alpha", ALPHA);
-        shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-        shader.setVec3("lightPos", lightPos);
-        shader.setVec3("viewPos", camera.getPosition());
-
         deltaTime = timeValue - lastFrame;
         lastFrame = timeValue;
 
         glm::mat4 model(1.0f);
         glm::mat4 view(1.0f);
         glm::mat4 projection(1.0f);
+        /*------------------------------------------------------------------------------*/
+        shader_static.activate();
 
-        model = car.model;
-        model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+        shader_static.setVec3("light[0].position", lightPos[0]);
+        shader_static.setVec3("light[0].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        shader_static.setVec3("light[0].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        shader_static.setVec3("light[0].specular", glm::vec3(0.3f, 0.3f, 0.3f));
+        shader_static.setVec3("light[1].position", lightPos[1]);
+        shader_static.setVec3("light[1].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        shader_static.setVec3("light[1].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        shader_static.setVec3("light[1].specular", glm::vec3(0.3f, 0.3f, 0.3f));
+        shader_static.setVec3("viewPos", camera.getPosition());
+        shader_static.setFloat("alpha", ALPHA);
+
         view = camera.getViewMatrix();
-        projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
-        shader.setMat4("model", model);
-        shader.setMat4("view", view);
-        shader.setMat4("projection", projection);
+        projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
+        shader_static.setMat4("model", model);
+        shader_static.setMat4("view", view);
+        shader_static.setMat4("projection", projection);
 
-        car.bindArray();
-        car.draw();
-        car.unbindArray();
+        lights.Draw(shader_static);
+        stopSigns.Draw(shader_static);
+        speedLimit.Draw(shader_static);
+        trafficLight.Draw(shader_static);
+        road.Draw(shader_static);
+        trees.Draw(shader_static);
 
-        model = road.model;
-        shader.setMat4("model", model);
-        
-        road.bindArray();
-        road.draw();
-        road.unbindArray();
+        shader_static.deactivate();
+        /*------------------------------------------------------------------------------*/
 
+        /*------------------------------------------------------------------------------*/
+        shader_car.activate();
+
+        shader_car.setVec3("light[0].position", lightPos[0]);
+        shader_car.setVec3("light[0].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        shader_car.setVec3("light[0].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        shader_car.setVec3("light[0].specular", glm::vec3(0.3f, 0.3f, 0.3f));
+        shader_car.setVec3("light[1].position", lightPos[1]);
+        shader_car.setVec3("light[1].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        shader_car.setVec3("light[1].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        shader_car.setVec3("light[1].specular", glm::vec3(0.3f, 0.3f, 0.3f));
+        shader_car.setVec3("viewPos", camera.getPosition());
+        shader_car.setFloat("alpha", ALPHA);
+
+        view = camera.getViewMatrix();
+        projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
+        shader_car.setMat4("model", model);
+        shader_car.setMat4("view", view);
+        shader_car.setMat4("projection", projection);
+
+        car.Draw(shader_car);
+
+        shader_car.deactivate();
+        /*------------------------------------------------------------------------------*/
+
+        /*------------------------------------------------------------------------------*/
+        glDepthFunc(GL_LEQUAL);
+        shader_skybox.activate();
+        view = glm::mat4(glm::mat3(camera.getViewMatrix()));
+        shader_skybox.setMat4("view", view);
+        shader_skybox.setMat4("projection", projection);
+
+        skybox.Draw(shader_skybox);
+        glDepthFunc(GL_LESS);
+        /*------------------------------------------------------------------------------*/
         glfwPollEvents();
-        glfwSwapBuffers(window.getWindow());
+        glfwSwapBuffers(window);
     }
 
     glfwTerminate();
@@ -119,10 +177,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
     if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
         camera.processMouseMovement(xoffset, yoffset);
-    else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
-        car.processMouseDrag(LEFT_ONLY, xoffset, yoffset, firstMouse);
-    else if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
-        car.processMouseDrag(LEFT_AND_RIGHT, xoffset, yoffset, firstMouse);
 
     if(firstMouse)
     {

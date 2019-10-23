@@ -1,250 +1,218 @@
 //
-// Created by dean on 19-10-9.
+// Created by dean on 19-10-20.
 //
 
 #ifndef LAB02_OBJECT_H
 #define LAB02_OBJECT_H
 
 #include "Utils.h"
+#include "Mesh.h"
 
-enum CLICK_STATUS
-{
-    LEFT_ONLY,
-    RIGHT_ONLY,
-    LEFT_AND_RIGHT
-};
+unsigned int TextureFromFile(const char *path, const std::string &dir, bool gamma = false);
 
 class Object
 {
 private:
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec3> normals;
-    std::vector<glm::vec2> uvs;
-    std::vector<glm::vec3> vertexAndNormal;
-    std::vector<GLuint> vertexIdx;
-    std::vector<GLuint> uvIdx;
-    std::vector<GLuint> normalIdx;
-    std::map<GLuint, GLuint> verNorm;
+    std::vector<Mesh> meshes;
+    std::string directory;
+    std::vector<Texture> textures_loaded;
+    bool gammaCorrection;
 
-    void loadObj(const char* filename)
+    void loadObj(const std::string dir)
     {
-        std::ifstream in;
-        std::string line;
-        in.open(filename);
-        if(!in)
+        Assimp::Importer importer;
+        const aiScene *scene = importer.ReadFile(dir, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals); //aiProcess_OptimizeMeshes for optimize
+
+        if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
         {
-            std::cerr << "Failed to open " << filename << std::endl;
+            std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
             exit(1);
         }
+        directory = dir.substr(0, dir.find_last_of('/'));
 
-        while(getline(in, line))
-        {
-            if(line.substr(0,2) == "v ")
-            {
-                std::istringstream is(line.substr(2));
-                glm::vec3 v;
-                is >> v.x >> v.y >> v.z;
-                vertices.push_back(v);
-            }
-            else if(line.substr(0,2) == "f ")
-            {
-                std::istringstream is(line.substr(2));
-                std::string s_in[3];
-                is >> s_in[0] >> s_in[1] >> s_in[2];
-                std::vector<GLuint> tmpVec;
-                tmpVec.clear();
-                
-                for(int i = 0; i < 3; ++i)
-                {
-                    std::stringstream input(s_in[i]);
-                    std::string tmp;
-                    while(getline(input, tmp, '/'))
-                    {   
-                        if(tmp != "")
-                        {
-                            GLuint tmpIdx = std::atoi(tmp.c_str());
-                            tmpIdx--;
-                            tmpVec.push_back(tmpIdx);
-                        }
-                    }
-                }
-                
-                if(tmpVec.size() == 9)
-                {
-                    for(int i = 0; i < 9; i += 3)
-                    {
-                        vertexIdx.push_back(tmpVec[i]);
-                        uvIdx.push_back(tmpVec[i+1]);
-                        normalIdx.push_back(tmpVec[i+2]);
-                        verNorm[tmpVec[i]] = tmpVec[i+2];
-                    }
-                }
-                else if(tmpVec.size() == 6)
-                {
-                    for(int i = 0; i < 6; i += 2)
-                    {
-                        vertexIdx.push_back(tmpVec[i]);
-                        normalIdx.push_back(tmpVec[i+1]);
-                        verNorm[tmpVec[i]] = tmpVec[i+1];
-                    }
-                }
-                else if(tmpVec.size() == 3)
-                {
-                    for(int i = 0; i < 3; i++)
-                    {
-                        vertexIdx.push_back(tmpVec[i]);
-                    }
-                }
-                else
-                {
-                    std::cerr << "ERROR::FAILED TO READ .OBJ FILE." << std::endl;
-                    exit(1);
-                }
-            }
-            else if(line.substr(0,2) == "vn")
-            {
-                std::istringstream is(line.substr(3));
-                glm::vec3 n;
-                is >> n.x >> n.y >> n.z;
-                normals.push_back(n);
-            }
-            else if(line.substr(0,2) == "vt")
-            {
-                std::istringstream is(line.substr(3));
-                glm::vec2 t;
-                is >> t.x >> t.y;
-                uvs.push_back(t);
-            }
-        }
-        in.close();
+        processNode(scene->mRootNode, scene);
     }
 
-    void calculateNormal()
+    void processNode(aiNode *node, const aiScene *scene)
     {
-        for(auto it = verNorm.begin(); it != verNorm.end(); ++it)
+        for(unsigned int i = 0; i < node->mNumMeshes; ++i)
         {
-            vertexAndNormal.push_back(vertices[it->first]);
-            vertexAndNormal.push_back(normals[it->second]);
+            aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
+            meshes.push_back(processMesh(mesh, scene));
+        }
+
+        for(unsigned int i = 0; i < node->mNumChildren; ++i)
+        {
+            processNode(node->mChildren[i], scene);
         }
     }
-    
-    // void calculateNormal()
-    // {
-    //     normals.resize(vertices.size(), glm::vec3(0.0,0.0,0.0));
-    //     vertexNormCount.resize(vertices.size(), 0);
 
-    //     for(auto i = 0; i < vertexIdx.size(); i += 3)
-    //     {
-    //         GLuint x, y, z;
-    //         x = vertexIdx[i];
-    //         y = vertexIdx[i+1];
-    //         z = vertexIdx[i+2];
-    //         glm::vec3 n = glm::normalize(glm::cross((vertices[y]-vertices[x]),(vertices[z]-vertices[y])));
-    //         normals[x] += n;
-    //         normals[y] += n;
-    //         normals[z] += n;
-    //         vertexNormCount[x]++;
-    //         vertexNormCount[y]++;
-    //         vertexNormCount[z]++;
-    //     }
-    //     for(auto i = 0; i < vertices.size(); ++i)
-    //     {
-    //         normals[i] = glm::normalize(normals[i] / (float)vertexNormCount[i]);
-    //     }
-    //     for(auto i = 0; i < vertices.size(); ++i)
-    //     {
-    //         vertexAndNormal.push_back(vertices[i]);
-    //         vertexAndNormal.push_back(normals[i]);
-    //     }
-    // }
-    
-    float getDeltaAngle(float xoffset, float yoffset)
+    Mesh processMesh(aiMesh *mesh, const aiScene *scene)
     {
-        float dist = glm::length(glm::vec2(xoffset, yoffset));
-        float deltaAngle = fmodf(dist * 0.2, 360.0f);
-        return deltaAngle;
+        std::vector<Vertex> vertices;
+        std::vector<unsigned int> indices;
+        std::vector<Texture> textures;
+
+        for(unsigned int i = 0; i < mesh->mNumVertices; ++i)
+        {
+            Vertex vertex;
+            glm::vec3 vec;
+
+            vec.x = mesh->mVertices[i].x;
+            vec.y = mesh->mVertices[i].y;
+            vec.z = mesh->mVertices[i].z;
+            vertex.Position = vec;
+
+            vec.x = mesh->mNormals[i].x;
+            vec.y = mesh->mNormals[i].y;
+            vec.z = mesh->mNormals[i].z;
+            vertex.Normal = vec;
+
+            if(mesh->mTextureCoords[0])
+            {
+                glm::vec2 vec;
+
+                vec.x = mesh->mTextureCoords[0][i].x;
+                vec.y = mesh->mTextureCoords[0][i].y;
+                vertex.TexCoords = vec;
+            }
+            else
+                vertex.TexCoords = glm::vec2(0.0f, 0.0f);
+
+            /*
+            vec.x = mesh->mTangents[i].x;
+            vec.y = mesh->mTangents[i].y;
+            vec.z = mesh->mTangents[i].z;
+            vertex.Tangent = vec;
+
+            vec.x = mesh->mBitangents[i].x;
+            vec.y = mesh->mBitangents[i].y;
+            vec.z = mesh->mBitangents[i].z;
+            vertex.Bitangent = vec;
+            */
+
+            vertices.push_back(vertex);
+        }
+
+        for(unsigned int i = 0; i < mesh->mNumFaces; ++i)
+        {
+            aiFace face = mesh->mFaces[i];
+            for(unsigned int j = 0; j < face.mNumIndices; ++j)
+                indices.push_back(face.mIndices[j]);
+        }
+
+        if(mesh->mMaterialIndex >= 0)
+        {
+            aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+
+            std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+            textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+
+            std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+            textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+
+            std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal"); //weird
+            textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+
+            std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height"); //weird
+            textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+        }
+
+        return Mesh(vertices, indices, textures);
     }
+
+    std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+    {
+        std::vector<Texture> textures;
+        for(unsigned int i = 0; i < mat->GetTextureCount(type); ++i)
+        {
+            aiString str;
+            mat->GetTexture(type, i, &str);
+            std::string tmp("");
+            int j = 0;
+            while(str.data[j] == 0)
+            {
+                ++j;
+            }
+            for(int k = j; k <= j + str.length; ++k)
+            {
+                tmp.append(1, str.data[k]);
+            }
+            str.Set(tmp);
+            bool skip = false;
+            for(unsigned int j = 0; j < textures_loaded.size(); ++j)
+            {
+                if(std::strcmp(textures_loaded[j].path.data, str.C_Str()) == 0)
+                {
+                    textures.push_back(textures_loaded[j]);
+                    skip = true;
+                    break;
+                }
+            }
+            if(!skip)
+            {
+                Texture texture;
+                texture.id = TextureFromFile(str.C_Str(), directory);
+                texture.type = typeName;
+                texture.path = str;
+                textures.push_back(texture);
+                textures_loaded.push_back(texture);
+            }
+        }
+        return textures;
+    }
+
 public:
-    unsigned int VAO, VBO, EBO;
-    glm::mat4 rot;
-    glm::mat4 model;
-
-    Object(const char* filename)
+    Object(const std::string &path, bool gamma = false):gammaCorrection(gamma)
     {
-        rot = glm::mat4(1.0f);
-        model = glm::mat4(1.0f);
-        loadObj(filename);
-        calculateNormal();
+        loadObj(path);
     }
 
-    void drawInit()
+    void Draw(Shader &shader)
     {
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO); //Create Vertex Buffer Object using Buffer ID = 1
-        glGenBuffers(1, &EBO);
-
-        glBindVertexArray(VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO); //Bind VBO to Buffer Type
-        glBufferData(GL_ARRAY_BUFFER, vertexAndNormal.size()*sizeof(vertexAndNormal[0]), vertexAndNormal.data(), GL_STATIC_DRAW); //Copy vertices to buffer memory use DYNAMIC/STREAM DRAW if it will change
-
-        //Index Drawing Optional
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, vertexIdx.size()*sizeof(vertexIdx[0]), vertexIdx.data(), GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)0); //How to explain vertex data
-        glEnableVertexAttribArray(0);
-    
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
-    }
-    
-    void draw()
-    {
-        glDrawElements(GL_TRIANGLES, vertexIdx.size(), GL_UNSIGNED_INT, 0);
-    }
-
-    void bindArray()
-    {
-        glBindVertexArray(VAO);
-    }
-
-    void unbindArray()
-    {
-        glBindVertexArray(0);
-    }
-
-    void processMouseDrag(CLICK_STATUS status, float xoffset, float yoffset, bool firstMouse)
-    {
-        if(firstMouse)
-        {
-            if(xoffset == 0.0f)
-            {
-                xoffset += 1e-9;
-            }
-            if(yoffset == 0.0f)
-            {
-                yoffset += 1e-9;
-            }
-        }
-        
-        if(status == LEFT_ONLY)
-        {
-            glm::vec3 dir = glm::vec3(xoffset / (float)WINDOW_WIDTH, yoffset / (float)WINDOW_HEIGHT, 0.0f);
-            dir = glm::vec3(glm::inverse(rot) * glm::vec4(dir, 1.0f));
-            model = glm::translate(model, dir);
-        }
-        else if(status == LEFT_AND_RIGHT)
-        {
-            glm::vec3 axis = glm::vec3(-yoffset, xoffset, 0.0f);
-            float deltaAngle = getDeltaAngle(xoffset, yoffset);
-            glm::mat4 deltaRot = glm::mat4(1.0f);
-            deltaRot = glm::rotate(deltaRot, glm::radians(deltaAngle), axis);
-            rot = deltaRot * rot;
-            glm::vec3 actualAxis = glm::normalize(glm::vec3(glm::inverse(rot) * glm::vec4(axis, 1.0f)));
-            model = glm::rotate(model, glm::radians(deltaAngle), actualAxis);
-        }
+        for(unsigned int i = 0; i < meshes.size(); ++i)
+            meshes[i].Draw(shader);
     }
 };
+
+unsigned int TextureFromFile(const char *path, const std::string &dir, bool gamma)
+{
+    std::string filename = std::string(path);
+    filename = dir + '/' +filename;
+
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+
+    int width, height, nrComponents;
+    unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+    if(data)
+    {
+        GLenum format;
+        if(nrComponents == 1)
+            format = GL_RED;
+        else if(nrComponents == 3)
+            format = GL_RGB;
+        else if(nrComponents == 4)
+            format = GL_RGBA;
+
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        stbi_image_free(data);
+    }
+    else
+    {
+        std::cerr << "Texture failed to load at path: " << path << std::endl;
+        stbi_image_free(data);
+    }
+
+    return textureID;
+}
 
 #endif //LAB02_OBJECT_H
