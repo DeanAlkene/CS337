@@ -93,7 +93,6 @@ public:
         deltaYaw = deltaYaw * 180 / glm::pi<float>();
         if(dir.x > 0.0f)
             deltaYaw = 360.0f - deltaYaw;
-        std::cout << deltaYaw << ' ' << deltaYaw + yaw << std::endl;
         update();
     }
 
