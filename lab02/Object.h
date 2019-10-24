@@ -12,7 +12,7 @@ unsigned int TextureFromFile(const char *path, const std::string &dir, bool gamm
 
 class Object
 {
-private:
+protected:
     std::vector<Mesh> meshes;
     std::string directory;
     std::vector<Texture> textures_loaded;

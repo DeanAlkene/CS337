@@ -12,6 +12,10 @@ Utils.h
 Object.h
 /home/dean/CS337/lab02/Object.h
 
+/home/dean/CS337/lab02/Car.h
+Object.h
+/home/dean/CS337/lab02/Object.h
+
 /home/dean/CS337/lab02/Mesh.h
 Utils.h
 /home/dean/CS337/lab02/Utils.h
@@ -81,6 +85,8 @@ Object.h
 /home/dean/CS337/lab02/Object.h
 Skybox.h
 /home/dean/CS337/lab02/Skybox.h
+Car.h
+/home/dean/CS337/lab02/Car.h
 
 /home/dean/CS337/lab02/stb_image.h
 stb_image.h

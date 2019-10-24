@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Object.h"
 #include "Skybox.h"
+#include "Car.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 bool firstMouse = true;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
+Camera camera(glm::vec3(0.0f, 5.0f, 5.0f));
 
 glm::vec3 lightPos[2] = {glm::vec3(0.5f, 1.0f, 1.0f), glm::vec3(-0.5f, 1.0f, 1.0f)};
 
@@ -59,7 +60,7 @@ int main()
     Shader shader_skybox("./vertex_skb.glsl", "./fragment_skb.glsl");
 /*------------------------------------------------------------------*/
     Object road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj"));
-    Object car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"));
+    Car car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"), 10.0, 1.0);
     Object lights(std::string("/home/dean/CS337/Models/Scene/Lights.obj"));
     Object stopSigns(std::string("/home/dean/CS337/Models/Scene/StopSign/StopSign.obj"));
     Object speedLimit(std::string("/home/dean/CS337/Models/Scene/SpeedLimit/SpeedLimit.obj"));
@@ -195,9 +196,9 @@ void processInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
 
     if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        camera.processKeyboard(FORWARD, deltaTime);
+        camera.processKeyboard(UP, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        camera.processKeyboard(BACKWARD, deltaTime);
+        camera.processKeyboard(DOWN, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
         camera.processKeyboard(LEFT, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)

@@ -29,4 +29,20 @@
 const int WINDOW_WIDTH = 1500;
 const int WINDOW_HEIGHT = 1200;
 
+enum Movement
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    Z,
+    X,
+    W,
+    A,
+    S,
+    D,
+    Q,
+    E
+};
+
 #endif //LAB02_UTILS_H

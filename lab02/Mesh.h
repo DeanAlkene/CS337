@@ -26,7 +26,8 @@ struct Texture
 
 class Mesh
 {
-private:
+    friend class Car;
+protected:
     unsigned int VAO, VBO, EBO;
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;

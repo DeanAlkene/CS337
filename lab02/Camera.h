@@ -8,16 +8,6 @@
 #include "Utils.h"
 #include "Object.h"
 
-enum Movement
-{
-    FORWARD,
-    BACKWARD,
-    LEFT,
-    RIGHT,
-    Z,
-    X
-};
-
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 10.0f;
@@ -111,9 +101,9 @@ public:
             position += front * speed;
         if(dir == X)
             position -= front * speed;
-        if(dir == FORWARD)
+        if(dir == UP)
             position += up * speed;
-        if(dir == BACKWARD)
+        if(dir == DOWN)
             position -= up * speed;
         if(dir == LEFT)
             position -= right * speed;

@@ -4,6 +4,7 @@
 CMakeFiles/lab02.dir/glad.c.o: ../glad.c
 
 CMakeFiles/lab02.dir/main.cpp.o: ../Camera.h
+CMakeFiles/lab02.dir/main.cpp.o: ../Car.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Mesh.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Object.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Shader.h
