@@ -26,6 +26,7 @@ private:
     float yaw;
     float pitch;
     float roll;
+    float deltaYaw;
 
     float moveSpeed;
     float sensitivity;
@@ -33,9 +34,10 @@ private:
 
     void update()
     {
-        front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+        front.x = cos(glm::radians(yaw + deltaYaw)) * cos(glm::radians(pitch));
         front.y = sin(glm::radians(pitch));
-        front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        front.z = sin(glm::radians(yaw + deltaYaw)) * cos(glm::radians(pitch));
+
         front = glm::normalize(front);
 
         right = glm::normalize(glm::cross(front, worldUp));
@@ -50,6 +52,7 @@ public:
         worldUp = worldup;
         yaw = Yaw;
         pitch = Pitch;
+        deltaYaw = 0.0f;
         update();
     }
 
@@ -60,6 +63,7 @@ public:
         worldUp = glm::vec3(upX, upY, upZ);
         yaw = Yaw;
         pitch = Pitch;
+        deltaYaw = 0.0f;
         update();
     }
 
@@ -80,17 +84,16 @@ public:
 
     void updatePos(const glm::vec3 &pos)
     {
-        position.x = pos.x;
-        position.y = pos.y;
-        position.z = pos.z;
-        update();
+        position = pos;
     }
 
-    void updateFront(const glm::vec3 &frt)
+    void updateFront(const glm::vec3 &dir)
     {
-        front.x = frt.x;
-        front.y = frt.y;
-        front.z = frt.z;
+        deltaYaw = glm::acos(glm::dot(glm::normalize(dir), glm::vec3(0.0f, 0.0f, 1.0f)));
+        deltaYaw = deltaYaw * 180 / glm::pi<float>();
+        if(dir.x > 0.0f)
+            deltaYaw = 360.0f - deltaYaw;
+        std::cout << deltaYaw << ' ' << deltaYaw + yaw << std::endl;
         update();
     }
 

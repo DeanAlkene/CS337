@@ -21,7 +21,7 @@ glm::vec3 lightPos[2] = {glm::vec3(0.5f, 1.0f, 1.0f), glm::vec3(-0.5f, 1.0f, 1.0
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void processInput(GLFWwindow* window); //check if keyboard input ESC in the rendering loop
+void processInput(GLFWwindow* window, Car &car); //check if keyboard input ESC in the rendering loop
 
 int main()
 {
@@ -60,7 +60,7 @@ int main()
     Shader shader_skybox("./vertex_skb.glsl", "./fragment_skb.glsl");
 /*------------------------------------------------------------------*/
     Object road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj"));
-    Car car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"), 10.0, 1.0);
+    Car car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"), 10.0, 2.0);
     Object lights(std::string("/home/dean/CS337/Models/Scene/Lights.obj"));
     Object stopSigns(std::string("/home/dean/CS337/Models/Scene/StopSign/StopSign.obj"));
     Object speedLimit(std::string("/home/dean/CS337/Models/Scene/SpeedLimit/SpeedLimit.obj"));
@@ -72,7 +72,7 @@ int main()
     while(!glfwWindowShouldClose(window))
     {
         //Keyboard Input
-        processInput(window);
+        processInput(window, car);
 
         //Rendering Operations
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -81,6 +81,8 @@ int main()
         float timeValue = glfwGetTime();
         deltaTime = timeValue - lastFrame;
         lastFrame = timeValue;
+        camera.updatePos(car.getCameraPos());
+        camera.updateFront(car.getDir());
 
         glm::mat4 model(1.0f);
         glm::mat4 view(1.0f);
@@ -129,6 +131,7 @@ int main()
         shader_car.setVec3("viewPos", camera.getPosition());
         shader_car.setFloat("alpha", ALPHA);
 
+        model = car.getModel();
         view = camera.getViewMatrix();
         projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
         shader_car.setMat4("model", model);
@@ -190,7 +193,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     camera.processMouseScroll(yoffset);
 }
 
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window, Car &car)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -207,4 +210,16 @@ void processInput(GLFWwindow* window)
         camera.processKeyboard(Z, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
         camera.processKeyboard(X, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        car.processKeyboard(W, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        car.processKeyboard(A, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        car.processKeyboard(S, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        car.processKeyboard(D, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        car.processKeyboard(Q, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        car.processKeyboard(E, deltaTime);
 }

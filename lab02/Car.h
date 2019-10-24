@@ -15,20 +15,34 @@ class Car : public Object
 private:
     float velocity;
     float acceleration;
+    float turnRadius;
     glm::mat4 model;
-    glm::vec3 leftTurnAxis;
-    glm::vec3 rightTurnAxis;
+    glm::vec3 leftTurnCenter;
+    glm::vec3 rightTurnCenter;
+    glm::vec3 frontAnchor;
+    glm::vec3 backAnchor;
     glm::vec3 camPos;
     std::vector<glm::vec3> AABB;
     void update(const glm::mat4 &delta)
     {
-
+        leftTurnCenter = glm::vec3(delta * glm::vec4(leftTurnCenter, 1.0f));
+        rightTurnCenter = glm::vec3(delta * glm::vec4(rightTurnCenter, 1.0f));
+        frontAnchor = glm::vec3(delta * glm::vec4(frontAnchor, 1.0f));
+        backAnchor = glm::vec3(delta * glm::vec4(backAnchor, 1.0f));
     }
 public:
     Car(const std::string &path, float v, float a) : Object(path), velocity(v), acceleration(a)
     {
         model = glm::mat4(1.0f);
         getAABB();
+        leftTurnCenter = AABB[5] + glm::vec3(0.0f, 0.0f, -1.5f);
+        leftTurnCenter = glm::vec3(leftTurnCenter.x, 0.0f, leftTurnCenter.z);
+        rightTurnCenter = AABB[4] + glm::vec3(0.0f, 0.0f, -1.5f);
+        rightTurnCenter = glm::vec3(rightTurnCenter.x, 0.0f, rightTurnCenter.z);
+        frontAnchor = glm::vec3(0.0f, 0.0f, 0.0f);
+        backAnchor = glm::vec3(0.0f, 0.0f, -1.0f);
+        camPos = glm::vec3(0.0f, 2.0f, -2.5f);
+        turnRadius = 20.0f;
     }
 
     void getAABB()
@@ -62,6 +76,16 @@ public:
         return glm::vec3(model * glm::vec4(camPos, 1.0f));
     }
 
+    glm::mat4 getModel()
+    {
+        return model;
+    }
+
+    glm::vec3 getDir()
+    {
+        return (frontAnchor - backAnchor);
+    }
+
     void processKeyboard(Movement dir, float deltaTime)
     {
         if(dir == A)
@@ -81,27 +105,47 @@ public:
 
     void turnLeft(float deltaTime)
     {
+        glm::mat4 axisTrans(1.0f);
+        axisTrans = glm::translate(axisTrans, leftTurnCenter);
 
+        float angularVelocity = velocity / turnRadius;
+        float angle = angularVelocity * deltaTime;
+
+        glm::mat4 move(1.0f);
+        move = axisTrans * glm::rotate(move, angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::inverse(axisTrans);
+        model = move * model;
+        update(move);
     }
 
     void turnRight(float deltaTime)
     {
+        glm::mat4 axisTrans(1.0f);
+        axisTrans = glm::translate(axisTrans, rightTurnCenter);
 
+        float angularVelocity = velocity / turnRadius;
+        float angle = angularVelocity * deltaTime;
+
+        glm::mat4 move(1.0f);
+        move = axisTrans * glm::rotate(move, -angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::inverse(axisTrans);
+        model = move * model;
+        update(move);
     }
 
     void goForward(float deltaTime)
     {
         glm::mat4 move(1.0f);
-        glm::translate(move, glm::vec3(0.0f, 0.0f, deltaTime * velocity));
+        move = glm::translate(move, -deltaTime * velocity * (frontAnchor - backAnchor));
         model = move * model;
+        //printMat4(model);
         update(move);
     }
 
     void goBackward(float deltaTime)
     {
         glm::mat4 move(1.0f);
-        glm::translate(move, glm::vec3(0.0f, 0.0f, -deltaTime * velocity));
+        move = glm::translate(move, deltaTime * velocity * (frontAnchor - backAnchor));
         model = move * model;
+        //printMat4(model);
         update(move);
     }
 };
