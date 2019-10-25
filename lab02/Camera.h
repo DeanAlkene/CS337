@@ -56,6 +56,47 @@ public:
         update();
     }
 
+    Camera(const Camera &rhs)
+    {
+        position = rhs.position;
+        worldUp = rhs.worldUp;
+        front = rhs.front;
+        up = rhs.up;
+        right = rhs.right;
+
+        yaw = rhs.yaw;
+        pitch = rhs.pitch;
+        roll = rhs.roll;
+        deltaYaw = rhs.deltaYaw;
+
+        moveSpeed = rhs.moveSpeed;
+        sensitivity = rhs.sensitivity;
+        zoom = rhs.zoom;
+    }
+
+    Camera &operator=(const Camera &rhs)
+    {
+        if(this == &rhs)
+            return *this;
+
+        position = rhs.position;
+        worldUp = rhs.worldUp;
+        front = rhs.front;
+        up = rhs.up;
+        right = rhs.right;
+
+        yaw = rhs.yaw;
+        pitch = rhs.pitch;
+        roll = rhs.roll;
+        deltaYaw = rhs.deltaYaw;
+
+        moveSpeed = rhs.moveSpeed;
+        sensitivity = rhs.sensitivity;
+        zoom = rhs.zoom;
+
+        return *this;
+    }
+
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float Yaw = YAW, float Pitch = PITCH)
             :roll(0.0f), front(glm::vec3(0.0f, 0.0f, -1.0f)), moveSpeed(SPEED), sensitivity(SENSITIVITY), zoom(ZOOM)
     {

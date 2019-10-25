@@ -13,6 +13,7 @@
 #include <iterator>
 #include <string>
 #include <cmath>
+#include <thread>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>

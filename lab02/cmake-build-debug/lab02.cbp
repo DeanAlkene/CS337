@@ -90,6 +90,9 @@
 		<Unit filename="/home/dean/CS337/lab02/Car.h">
 			<Option target="lab02"/>
 		</Unit>
+		<Unit filename="/home/dean/CS337/lab02/Game.h">
+			<Option target="lab02"/>
+		</Unit>
 		<Unit filename="/home/dean/CS337/lab02/Mesh.h">
 			<Option target="lab02"/>
 		</Unit>
@@ -97,6 +100,9 @@
 			<Option target="lab02"/>
 		</Unit>
 		<Unit filename="/home/dean/CS337/lab02/Shader.h">
+			<Option target="lab02"/>
+		</Unit>
+		<Unit filename="/home/dean/CS337/lab02/Shadow.h">
 			<Option target="lab02"/>
 		</Unit>
 		<Unit filename="/home/dean/CS337/lab02/Skybox.h">

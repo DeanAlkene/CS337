@@ -13,8 +13,9 @@ float lastY = WINDOW_HEIGHT / 2.0f;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 bool firstMouse = true;
+bool cameraType = false;
 
-Camera camera(glm::vec3(0.0f, 5.0f, 5.0f));
+Camera camera[2];
 
 glm::vec3 lightPos[2] = {glm::vec3(0.5f, 1.0f, 1.0f), glm::vec3(-0.5f, 1.0f, 1.0f)};
 
@@ -22,6 +23,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window, Car &car); //check if keyboard input ESC in the rendering loop
+void changeView(float deltaTime);
 
 int main()
 {
@@ -68,6 +70,7 @@ int main()
     Object trees(std::string("/home/dean/CS337/Models/Scene/Palm/Palm.obj"));
     Skybox skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga"));
 /*------------------------------------------------------------------*/
+    camera[0] = Camera(glm::vec3(0.0f, 10.0f, 10.0f));
 
     while(!glfwWindowShouldClose(window))
     {
@@ -81,8 +84,8 @@ int main()
         float timeValue = glfwGetTime();
         deltaTime = timeValue - lastFrame;
         lastFrame = timeValue;
-        camera.updatePos(car.getCameraPos());
-        camera.updateFront(car.getDir());
+        camera[1].updatePos(car.getCameraPos());
+        camera[1].updateFront(car.getDir());
 
         glm::mat4 model(1.0f);
         glm::mat4 view(1.0f);
@@ -98,11 +101,11 @@ int main()
         shader_static.setVec3("light[1].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
         shader_static.setVec3("light[1].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
         shader_static.setVec3("light[1].specular", glm::vec3(0.3f, 0.3f, 0.3f));
-        shader_static.setVec3("viewPos", camera.getPosition());
+        shader_static.setVec3("viewPos", camera[cameraType].getPosition());
         shader_static.setFloat("alpha", ALPHA);
 
-        view = camera.getViewMatrix();
-        projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
+        view = camera[cameraType].getViewMatrix();
+        projection = glm::perspective(glm::radians(camera[cameraType].getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
         shader_static.setMat4("model", model);
         shader_static.setMat4("view", view);
         shader_static.setMat4("projection", projection);
@@ -128,12 +131,12 @@ int main()
         shader_car.setVec3("light[1].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
         shader_car.setVec3("light[1].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
         shader_car.setVec3("light[1].specular", glm::vec3(0.3f, 0.3f, 0.3f));
-        shader_car.setVec3("viewPos", camera.getPosition());
+        shader_car.setVec3("viewPos", camera[cameraType].getPosition());
         shader_car.setFloat("alpha", ALPHA);
 
         model = car.getModel();
-        view = camera.getViewMatrix();
-        projection = glm::perspective(glm::radians(camera.getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
+        view = camera[cameraType].getViewMatrix();
+        projection = glm::perspective(glm::radians(camera[cameraType].getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
         shader_car.setMat4("model", model);
         shader_car.setMat4("view", view);
         shader_car.setMat4("projection", projection);
@@ -146,7 +149,7 @@ int main()
         /*------------------------------------------------------------------------------*/
         glDepthFunc(GL_LEQUAL);
         shader_skybox.activate();
-        view = glm::mat4(glm::mat3(camera.getViewMatrix()));
+        view = glm::mat4(glm::mat3(camera[cameraType].getViewMatrix()));
         shader_skybox.setMat4("view", view);
         shader_skybox.setMat4("projection", projection);
 
@@ -180,7 +183,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastY = ypos;
 
     if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_PRESS && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_PRESS)
-        camera.processMouseMovement(xoffset, yoffset);
+        camera[cameraType].processMouseMovement(xoffset, yoffset);
 
     if(firstMouse)
     {
@@ -190,7 +193,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    camera.processMouseScroll(yoffset);
+    camera[cameraType].processMouseScroll(yoffset);
 }
 
 void processInput(GLFWwindow* window, Car &car)
@@ -199,17 +202,17 @@ void processInput(GLFWwindow* window, Car &car)
         glfwSetWindowShouldClose(window, true);
 
     if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        camera.processKeyboard(UP, deltaTime);
+        camera[cameraType].processKeyboard(UP, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        camera.processKeyboard(DOWN, deltaTime);
+        camera[cameraType].processKeyboard(DOWN, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        camera.processKeyboard(LEFT, deltaTime);
+        camera[cameraType].processKeyboard(LEFT, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        camera.processKeyboard(RIGHT, deltaTime);
+        camera[cameraType].processKeyboard(RIGHT, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-        camera.processKeyboard(Z, deltaTime);
+        camera[cameraType].processKeyboard(Z, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-        camera.processKeyboard(X, deltaTime);
+        camera[cameraType].processKeyboard(X, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         car.processKeyboard(W, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
@@ -222,4 +225,12 @@ void processInput(GLFWwindow* window, Car &car)
         car.processKeyboard(Q, deltaTime);
     if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         car.processKeyboard(E, deltaTime);
+    if(glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
+        changeView(deltaTime);
+}
+
+void changeView(float deltaTime)
+{
+    this_thread::sleep_for(chrono::milliseconds(300));
+    cameraType = !cameraType;
 }

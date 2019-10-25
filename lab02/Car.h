@@ -42,7 +42,7 @@ public:
         frontAnchor = glm::vec3(0.0f, 0.0f, 0.0f);
         backAnchor = glm::vec3(0.0f, 0.0f, -1.0f);
         camPos = glm::vec3(0.0f, 2.0f, -2.5f);
-        turnRadius = 20.0f;
+        turnRadius = 10.0f;
     }
 
     void getAABB()
