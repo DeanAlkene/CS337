@@ -111,6 +111,9 @@
 		<Unit filename="/home/dean/CS337/lab02/Utils.h">
 			<Option target="lab02"/>
 		</Unit>
+		<Unit filename="/home/dean/CS337/lab02/Window.h">
+			<Option target="lab02"/>
+		</Unit>
 		<Unit filename="/home/dean/CS337/lab02/glad.c">
 			<Option target="lab02"/>
 		</Unit>

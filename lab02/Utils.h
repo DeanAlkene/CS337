@@ -59,4 +59,12 @@ void printMat4(const glm::mat4 &mat)
     std::cout << std::endl;
 }
 
+//TODO: 1. Game.h
+//      2. Scene.h
+//      3. Shadow.h
+//      4. Optimize 't' to change camera
+//      5. Reshape function
+//      6. Menu
+//      7. Refine all the thing
+
 #endif //LAB02_UTILS_H

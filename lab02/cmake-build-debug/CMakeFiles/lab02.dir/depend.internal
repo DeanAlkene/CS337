@@ -6,10 +6,12 @@ CMakeFiles/lab02.dir/glad.c.o
 CMakeFiles/lab02.dir/main.cpp.o
  /home/dean/CS337/lab02/Camera.h
  /home/dean/CS337/lab02/Car.h
+ /home/dean/CS337/lab02/Game.h
  /home/dean/CS337/lab02/Mesh.h
  /home/dean/CS337/lab02/Object.h
  /home/dean/CS337/lab02/Shader.h
  /home/dean/CS337/lab02/Skybox.h
  /home/dean/CS337/lab02/Utils.h
+ /home/dean/CS337/lab02/Window.h
  /home/dean/CS337/lab02/main.cpp
  /home/dean/CS337/lab02/stb_image.h
