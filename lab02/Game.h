@@ -11,6 +11,8 @@
 #include "Object.h"
 #include "Skybox.h"
 #include "Car.h"
+#include "Road.h"
+#include "Scene.h"
 #include "Window.h"
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -27,6 +29,7 @@ public:
     float lastFrame;
     bool firstMouse;
     bool cameraType;
+    bool cursorState;
 
     Window window;
 
@@ -34,34 +37,97 @@ public:
 
     glm::vec3 lightPos[2];
 
-    Shader shader_static;
+    Shader shader_scene;
+    Shader shader_road;
     Shader shader_car;
     Shader shader_skybox;
 
-    Object road;
+    Road road;
     Car car;
-    Object lights;
-    Object stopSigns;
-    Object speedLimit;
-    Object trafficLight;
-    Object trees;
     Skybox skybox;
+    Scene scene;
 
+    void configShader(Shader &shader)
+    {
+        shader.setVec3("light[0].position", lightPos[0]);
+        shader.setVec3("light[0].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        shader.setVec3("light[0].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        shader.setVec3("light[0].specular", glm::vec3(0.3f, 0.3f, 0.3f));
+        shader.setVec3("light[1].position", lightPos[1]);
+        shader.setVec3("light[1].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        shader.setVec3("light[1].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        shader.setVec3("light[1].specular", glm::vec3(0.3f, 0.3f, 0.3f));
+        shader.setVec3("viewPos", camera[cameraType].getPosition());
+        shader.setFloat("alpha", ALPHA);
+    }
+
+    void configScene()
+    {
+        glm::mat4 model(1.0f);
+        glm::mat4 view(1.0f);
+        glm::mat4 projection(1.0f);
+
+        configShader(shader_scene);
+
+        view = camera[cameraType].getViewMatrix();
+        projection = glm::perspective(glm::radians(camera[cameraType].getZoom()), window.getAspect(), 0.1f, 1000.0f);
+        shader_scene.setMat4("model", model);
+        shader_scene.setMat4("view", view);
+        shader_scene.setMat4("projection", projection);
+    }
+    
+    void configRoad()
+    {
+        glm::mat4 model(1.0f);
+        glm::mat4 view(1.0f);
+        glm::mat4 projection(1.0f);
+
+        configShader(shader_road);
+
+        view = camera[cameraType].getViewMatrix();
+        projection = glm::perspective(glm::radians(camera[cameraType].getZoom()), window.getAspect(), 0.1f, 1000.0f);
+        shader_road.setMat4("model", model);
+        shader_road.setMat4("view", view);
+        shader_road.setMat4("projection", projection);
+    }
+    
+    void configCar()
+    {
+        glm::mat4 model(1.0f);
+        glm::mat4 view(1.0f);
+        glm::mat4 projection(1.0f);
+        
+        configShader(shader_car);
+
+        model = car.getModel();
+        view = camera[cameraType].getViewMatrix();
+        projection = glm::perspective(glm::radians(camera[cameraType].getZoom()), window.getAspect(), 0.1f, 1000.0f);
+        shader_car.setMat4("model", model);
+        shader_car.setMat4("view", view);
+        shader_car.setMat4("projection", projection);
+    }
+    
+    void configSkybox()
+    {
+        glm::mat4 view(1.0f);
+        glm::mat4 projection(1.0f);
+        view = glm::mat4(glm::mat3(camera[cameraType].getViewMatrix()));
+        projection = glm::perspective(glm::radians(camera[cameraType].getZoom()), window.getAspect(), 0.1f, 1000.0f);
+        shader_skybox.setMat4("view", view);
+        shader_skybox.setMat4("projection", projection);
+    }
 
 public:
     Game()
     : window("Running Kart"),
-      shader_static("./vertex.glsl", "./fragment.glsl"),
+      shader_scene("./vertex.glsl", "./fragment.glsl"),
+      shader_road("./vertex.glsl", "./fragment_NT.glsl"),
       shader_car("./vertex.glsl", "./fragment_NT.glsl"),
       shader_skybox("./vertex_skb.glsl", "./fragment_skb.glsl"),
       road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj")),
       car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"), 10.0, 2.0),
-      lights(std::string("/home/dean/CS337/Models/Scene/Lights.obj")),
-      stopSigns(std::string("/home/dean/CS337/Models/Scene/StopSign/StopSign.obj")),
-      speedLimit(std::string("/home/dean/CS337/Models/Scene/SpeedLimit/SpeedLimit.obj")),
-      trafficLight(std::string("/home/dean/CS337/Models/Scene/trafficlight/trafficlight.obj")),
-      trees(std::string("/home/dean/CS337/Models/Scene/Palm/Palm.obj")),
-      skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga"))
+      skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga")),
+      scene()
     {
         camera[0] = Camera(glm::vec3(0.0f, 10.0f, 10.0f));
         lightPos[0] = glm::vec3(0.5f, 1.0f, 1.0f);
@@ -72,6 +138,7 @@ public:
         lastFrame = 0.0f;
         firstMouse = true;
         cameraType = false;
+        cursorState = true;
     }
     void init()
     {
@@ -92,7 +159,7 @@ public:
         while(!glfwWindowShouldClose(window.window))
         {
             //Keyboard Input
-            processInput(window.window, car);
+            processInput(window.window);
 
             //Rendering Operations
             glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -104,72 +171,31 @@ public:
             camera[1].updatePos(car.getCameraPos());
             camera[1].updateFront(car.getDir());
 
-            glm::mat4 model(1.0f);
-            glm::mat4 view(1.0f);
-            glm::mat4 projection(1.0f);
             /*------------------------------------------------------------------------------*/
-            shader_static.activate();
+            shader_scene.activate();
+            configScene();
+            scene.Draw(shader_scene);
+            shader_scene.deactivate();
+            /*------------------------------------------------------------------------------*/
 
-            shader_static.setVec3("light[0].position", lightPos[0]);
-            shader_static.setVec3("light[0].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-            shader_static.setVec3("light[0].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-            shader_static.setVec3("light[0].specular", glm::vec3(0.3f, 0.3f, 0.3f));
-            shader_static.setVec3("light[1].position", lightPos[1]);
-            shader_static.setVec3("light[1].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-            shader_static.setVec3("light[1].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-            shader_static.setVec3("light[1].specular", glm::vec3(0.3f, 0.3f, 0.3f));
-            shader_static.setVec3("viewPos", camera[cameraType].getPosition());
-            shader_static.setFloat("alpha", ALPHA);
-
-            view = camera[cameraType].getViewMatrix();
-            projection = glm::perspective(glm::radians(camera[cameraType].getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
-            shader_static.setMat4("model", model);
-            shader_static.setMat4("view", view);
-            shader_static.setMat4("projection", projection);
-
-            lights.Draw(shader_static);
-            stopSigns.Draw(shader_static);
-            speedLimit.Draw(shader_static);
-            trafficLight.Draw(shader_static);
-            road.Draw(shader_static);
-            trees.Draw(shader_static);
-
-            shader_static.deactivate();
+            /*------------------------------------------------------------------------------*/
+            shader_road.activate();
+            configRoad();
+            road.Draw(shader_road);
+            shader_road.deactivate();
             /*------------------------------------------------------------------------------*/
 
             /*------------------------------------------------------------------------------*/
             shader_car.activate();
-
-            shader_car.setVec3("light[0].position", lightPos[0]);
-            shader_car.setVec3("light[0].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-            shader_car.setVec3("light[0].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-            shader_car.setVec3("light[0].specular", glm::vec3(0.3f, 0.3f, 0.3f));
-            shader_car.setVec3("light[1].position", lightPos[1]);
-            shader_car.setVec3("light[1].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-            shader_car.setVec3("light[1].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-            shader_car.setVec3("light[1].specular", glm::vec3(0.3f, 0.3f, 0.3f));
-            shader_car.setVec3("viewPos", camera[cameraType].getPosition());
-            shader_car.setFloat("alpha", ALPHA);
-
-            model = car.getModel();
-            view = camera[cameraType].getViewMatrix();
-            projection = glm::perspective(glm::radians(camera[cameraType].getZoom()), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
-            shader_car.setMat4("model", model);
-            shader_car.setMat4("view", view);
-            shader_car.setMat4("projection", projection);
-
+            configCar();
             car.Draw(shader_car);
-
             shader_car.deactivate();
             /*------------------------------------------------------------------------------*/
 
             /*------------------------------------------------------------------------------*/
             glDepthFunc(GL_LEQUAL);
             shader_skybox.activate();
-            view = glm::mat4(glm::mat3(camera[cameraType].getViewMatrix()));
-            shader_skybox.setMat4("view", view);
-            shader_skybox.setMat4("projection", projection);
-
+            configSkybox();
             skybox.Draw(shader_skybox);
             glDepthFunc(GL_LESS);
             /*------------------------------------------------------------------------------*/
@@ -183,7 +209,7 @@ public:
         glfwTerminate();
     }
 
-    void processInput(GLFWwindow* window, Car &car)
+    void processInput(GLFWwindow* window)
     {
         if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, true);
@@ -200,6 +226,7 @@ public:
             camera[cameraType].processKeyboard(Z, deltaTime);
         if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
             camera[cameraType].processKeyboard(X, deltaTime);
+
         if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
             car.processKeyboard(W, deltaTime);
         if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
@@ -212,8 +239,11 @@ public:
             car.processKeyboard(Q, deltaTime);
         if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
             car.processKeyboard(E, deltaTime);
+
         if(glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
             changeView(deltaTime);
+        if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+            changeCursorPos(window);
     }
 
     void changeView(float deltaTime)
@@ -221,11 +251,23 @@ public:
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         cameraType = !cameraType;
     }
+
+    void changeCursorPos(GLFWwindow* window)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        cursorState = !cursorState;
+        if(cursorState)
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        else
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
 };
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+    static_cast<Game*>(glfwGetWindowUserPointer(window))->window.width = width;
+    static_cast<Game*>(glfwGetWindowUserPointer(window))->window.height = height;
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)

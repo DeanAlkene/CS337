@@ -163,6 +163,8 @@ protected:
     }
 
 public:
+    Object() = default;
+
     Object(const std::string &path, bool gamma = false):gammaCorrection(gamma)
     {
         loadObj(path);

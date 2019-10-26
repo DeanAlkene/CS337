@@ -11,15 +11,19 @@ class Window
 {
 public:
     GLFWwindow* window;
+    int width;
+    int height;
 
-    Window(const char* name)
+    Window(const char* name, int w = WINDOW_WIDTH, int h = WINDOW_HEIGHT)
     {
+        width = w;
+        height = h;
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, name, NULL, NULL);
+        window = glfwCreateWindow(width, height, name, NULL, NULL);
         if(!window)
         {
             std::cerr << "Failed to create window!" << std::endl;
@@ -33,6 +37,11 @@ public:
             std::cerr << "Failed to initialize GLAD" << std::endl;
             exit(1);
         }
+    }
+
+    float getAspect()
+    {
+        return ((float)width / (float) height);
     }
 };
 

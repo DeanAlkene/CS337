@@ -8,6 +8,8 @@ CMakeFiles/lab02.dir/main.cpp.o: ../Car.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Game.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Mesh.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Object.h
+CMakeFiles/lab02.dir/main.cpp.o: ../Road.h
+CMakeFiles/lab02.dir/main.cpp.o: ../Scene.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Shader.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Skybox.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Utils.h
