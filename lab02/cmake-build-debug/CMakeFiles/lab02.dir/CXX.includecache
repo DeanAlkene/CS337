@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/home/dean/CS337/lab02/Barrier.h
+Utils.h
+/home/dean/CS337/lab02/Utils.h
+
 /home/dean/CS337/lab02/Camera.h
 Utils.h
 /home/dean/CS337/lab02/Utils.h
@@ -35,6 +39,8 @@ Scene.h
 /home/dean/CS337/lab02/Scene.h
 Window.h
 /home/dean/CS337/lab02/Window.h
+Barrier.h
+/home/dean/CS337/lab02/Barrier.h
 
 /home/dean/CS337/lab02/Mesh.h
 Utils.h
@@ -53,6 +59,8 @@ Object.h
 /home/dean/CS337/lab02/Object.h
 Car.h
 /home/dean/CS337/lab02/Car.h
+Barrier.h
+/home/dean/CS337/lab02/Barrier.h
 
 /home/dean/CS337/lab02/Scene.h
 Object.h
@@ -88,6 +96,10 @@ string
 cmath
 -
 thread
+-
+algorithm
+-
+functional
 -
 glad/glad.h
 -

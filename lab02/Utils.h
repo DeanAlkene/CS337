@@ -14,6 +14,8 @@
 #include <string>
 #include <cmath>
 #include <thread>
+#include <algorithm>
+#include <functional>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>

@@ -3,6 +3,7 @@
 
 CMakeFiles/lab02.dir/glad.c.o: ../glad.c
 
+CMakeFiles/lab02.dir/main.cpp.o: ../Barrier.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Camera.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Car.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Game.h

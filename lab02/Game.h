@@ -14,6 +14,7 @@
 #include "Road.h"
 #include "Scene.h"
 #include "Window.h"
+#include "Barrier.h"
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -46,6 +47,7 @@ public:
     Car car;
     Skybox skybox;
     Scene scene;
+    Barrier barrier;
 
     void configShader(Shader &shader)
     {
@@ -127,7 +129,8 @@ public:
       road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj")),
       car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"), 10.0, 2.0),
       skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga")),
-      scene()
+      scene(),
+      barrier("/home/dean/CS337/Models/Scene/Barrier.obj")
     {
         camera[0] = Camera(glm::vec3(0.0f, 10.0f, 10.0f));
         lightPos[0] = glm::vec3(0.5f, 1.0f, 1.0f);
