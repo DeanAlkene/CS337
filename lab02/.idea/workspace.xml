@@ -12,19 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0447619b-53f6-477e-9784-32aec3c6e815" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Road.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scene.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Barrier.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/Game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Object.h" beforeDir="false" afterPath="$PROJECT_DIR$/Object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Road.h" beforeDir="false" afterPath="$PROJECT_DIR$/Road.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shadow.h" beforeDir="false" afterPath="$PROJECT_DIR$/Shadow.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/Utils.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Window.h" beforeDir="false" afterPath="$PROJECT_DIR$/Window.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lab02.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lab02.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lab02.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lab02.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lab02.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lab02.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lab02.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lab02.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/lab02" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/lab02" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/lab02.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/lab02.cbp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -46,19 +40,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Game.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1034">
-              <caret line="229" column="8" selection-start-line="229" selection-start-column="8" selection-end-line="229" selection-end-column="8" />
+            <state relative-caret-position="4470">
+              <caret line="300" selection-start-line="300" selection-end-line="300" />
               <folding>
                 <element signature="e#82#100#0" expanded="true" />
               </folding>
@@ -67,7 +52,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Shadow.h">
+        <entry file="file://$PROJECT_DIR$/Road.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+              <folding>
+                <element signature="e#82#101#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Barrier.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="242">
               <caret line="11" selection-start-line="11" selection-end-line="11" />
@@ -75,50 +72,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Shader.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="69" column="31" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Window.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Object.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-620">
-              <caret line="166" selection-start-line="166" selection-end-line="166" />
-              <folding>
-                <element signature="e#86#104#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Car.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
+            <state relative-caret-position="2386">
               <caret line="125" column="50" selection-start-line="125" selection-start-column="50" selection-end-line="125" selection-end-column="50" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Utils.h">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Scene.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="66" column="48" selection-start-line="66" selection-start-column="48" selection-end-line="66" selection-end-column="48" />
+            <state relative-caret-position="604">
+              <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
               <folding>
                 <element signature="e#84#103#0" expanded="true" />
               </folding>
@@ -127,18 +94,61 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Road.h">
+        <entry file="file://$PROJECT_DIR$/Shadow.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="394">
+              <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmake-build-debug/vertex_shadow.glsl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmake-build-debug/fragment_shadow.glsl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Utils.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1342">
+              <caret line="61" column="2" selection-start-line="61" selection-start-column="2" selection-end-line="61" selection-end-column="2" />
               <folding>
-                <element signature="e#82#101#0" expanded="true" />
+                <element signature="e#84#103#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Window.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="946">
+              <caret line="43" column="38" selection-start-line="43" selection-start-column="38" selection-end-line="43" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="GLSL Shader" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -168,15 +178,18 @@
         <option value="$PROJECT_DIR$/Mesh.h" />
         <option value="$PROJECT_DIR$/Car.h" />
         <option value="$PROJECT_DIR$/Camera.h" />
-        <option value="$PROJECT_DIR$/Shadow.h" />
         <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/Backup.cpp" />
         <option value="$PROJECT_DIR$/Scene.h" />
-        <option value="$PROJECT_DIR$/Road.h" />
         <option value="$PROJECT_DIR$/Object.h" />
-        <option value="$PROJECT_DIR$/Window.h" />
         <option value="$PROJECT_DIR$/Game.h" />
+        <option value="$PROJECT_DIR$/Window.h" />
+        <option value="$PROJECT_DIR$/cmake-build-debug/fragment_shadow.glsl" />
+        <option value="$PROJECT_DIR$/cmake-build-debug/vertex_shadow.glsl" />
+        <option value="$PROJECT_DIR$/Shadow.h" />
         <option value="$PROJECT_DIR$/Utils.h" />
+        <option value="$PROJECT_DIR$/Road.h" />
+        <option value="$PROJECT_DIR$/Barrier.h" />
       </list>
     </option>
   </component>
@@ -192,7 +205,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -200,10 +212,16 @@
               <item name="lab02" type="b2602c69:ProjectViewProjectNode" />
               <item name="lab02" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="lab02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lab02" type="462c0819:PsiDirectoryNode" />
+              <item name="cmake-build-debug" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -348,23 +366,25 @@
       <workItem from="1571961625323" duration="4600000" />
       <workItem from="1572008038284" duration="5998000" />
       <workItem from="1572056094837" duration="3602000" />
-      <workItem from="1572060449458" duration="458000" />
+      <workItem from="1572060449458" duration="1365000" />
+      <workItem from="1572066529330" duration="4153000" />
+      <workItem from="1572077293486" duration="173000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83830000" />
+    <option name="totallyTimeSpent" value="89063000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="30" width="1920" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.21605603" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.21497844" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.3297414" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4989224" visible="true" weight="0.2259887" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989224" weight="0.2259887" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4994612" weight="0.319774" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -499,30 +519,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mesh.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
-          <folding>
-            <element signature="e#82#100#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Backup.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4752">
           <caret line="216" column="44" selection-start-line="216" selection-start-column="44" selection-end-line="216" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Skybox.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1164">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
-          <folding>
-            <element signature="e#86#104#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -533,23 +533,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scene.h">
+    <entry file="file://$PROJECT_DIR$/Skybox.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+        <state relative-caret-position="1660">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
           <folding>
-            <element signature="e#84#103#0" expanded="true" />
+            <element signature="e#86#104#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Road.h">
+    <entry file="file://$PROJECT_DIR$/Object.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="2708">
+          <caret line="166" selection-start-line="166" selection-end-line="166" />
           <folding>
-            <element signature="e#82#101#0" expanded="true" />
+            <element signature="e#86#104#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shader.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1322">
+          <caret line="69" column="31" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -560,61 +567,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Game.h">
+    <entry file="file://$PROJECT_DIR$/Mesh.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1034">
-          <caret line="229" column="8" selection-start-line="229" selection-start-column="8" selection-end-line="229" selection-end-column="8" />
+        <state relative-caret-position="1870">
+          <caret line="85" column="57" selection-start-line="84" selection-end-line="85" selection-end-column="57" />
           <folding>
             <element signature="e#82#100#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/vertex_shadow.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/fragment_shadow.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Window.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="946">
+          <caret line="43" column="38" selection-start-line="43" selection-start-column="38" selection-end-line="43" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scene.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="604">
+          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+          <folding>
+            <element signature="e#84#103#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Shadow.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utils.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1342">
+          <caret line="61" column="2" selection-start-line="61" selection-start-column="2" selection-end-line="61" selection-end-column="2" />
+          <folding>
+            <element signature="e#84#103#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Game.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4470">
+          <caret line="300" selection-start-line="300" selection-end-line="300" />
+          <folding>
+            <element signature="e#82#100#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Road.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+          <folding>
+            <element signature="e#82#101#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Barrier.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Shader.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="69" column="31" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Window.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Object.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-620">
-          <caret line="166" selection-start-line="166" selection-end-line="166" />
-          <folding>
-            <element signature="e#86#104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Car.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
+        <state relative-caret-position="2386">
           <caret line="125" column="50" selection-start-line="125" selection-start-column="50" selection-end-line="125" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="66" column="48" selection-start-line="66" selection-start-column="48" selection-end-line="66" selection-end-column="48" />
-          <folding>
-            <element signature="e#84#103#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

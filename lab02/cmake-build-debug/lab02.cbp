@@ -84,6 +84,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/dean/CS337/lab02/Barrier.h">
+			<Option target="lab02"/>
+		</Unit>
 		<Unit filename="/home/dean/CS337/lab02/Camera.h">
 			<Option target="lab02"/>
 		</Unit>

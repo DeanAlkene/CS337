@@ -7,6 +7,7 @@
 
 #include "Object.h"
 #include "Car.h"
+#include "Barrier.h"
 
 class Road : public Object
 {

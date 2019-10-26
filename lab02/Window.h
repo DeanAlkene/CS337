@@ -23,7 +23,7 @@ public:
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        window = glfwCreateWindow(width, height, name, NULL, NULL);
+        window = glfwCreateWindow(width, height, name, nullptr, nullptr);
         if(!window)
         {
             std::cerr << "Failed to create window!" << std::endl;
@@ -41,7 +41,7 @@ public:
 
     float getAspect()
     {
-        return ((float)width / (float) height);
+        return ((float)width / (float)height);
     }
 };
 
