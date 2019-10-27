@@ -29,8 +29,8 @@
 
 #include "stb_image.h"
 
-const int WINDOW_WIDTH = 1500;
-const int WINDOW_HEIGHT = 1200;
+const int WINDOW_WIDTH = 1200;
+const int WINDOW_HEIGHT = 800;
 
 enum Movement
 {

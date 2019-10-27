@@ -12,6 +12,7 @@ const float MAX = 1.0e-9;
 
 class Car : public Object
 {
+    friend class Road;
 private:
     float velocity;
     float acceleration;
@@ -29,6 +30,10 @@ private:
         rightTurnCenter = glm::vec3(delta * glm::vec4(rightTurnCenter, 1.0f));
         frontAnchor = glm::vec3(delta * glm::vec4(frontAnchor, 1.0f));
         backAnchor = glm::vec3(delta * glm::vec4(backAnchor, 1.0f));
+        for(int i = 0; i < AABB.size(); ++i)
+        {
+            AABB[i] = glm::vec3(delta * glm::vec4(AABB[i], 1.0f));
+        }
     }
 public:
     Car(const std::string &path, float v, float a) : Object(path), velocity(v), acceleration(a)
@@ -61,14 +66,14 @@ public:
             }
         }
         std::cout << min_x << ' ' << min_y << ' ' << min_z << ' ' << max_x << ' ' << max_y << ' ' << max_z << std::endl;
-        AABB.push_back(glm::vec3(max_x, max_y, max_z)); //top up left
-        AABB.push_back(glm::vec3(min_x, max_y, max_z)); //top up right
-        AABB.push_back(glm::vec3(min_x, max_y, min_z)); //top down right
-        AABB.push_back(glm::vec3(max_x, max_y, min_z)); //top down left
-        AABB.push_back(glm::vec3(max_x, min_y, max_z)); //bottom up left
-        AABB.push_back(glm::vec3(min_x, min_y, max_z)); //bottom up right
-        AABB.push_back(glm::vec3(min_x, min_y, min_z)); //bottom down right
-        AABB.push_back(glm::vec3(max_x, min_y, min_z)); //bottom down left
+        AABB.push_back(glm::vec3(max_x, max_y, max_z)); //top tail left
+        AABB.push_back(glm::vec3(min_x, max_y, max_z)); //top tail right
+        AABB.push_back(glm::vec3(min_x, max_y, min_z)); //top head right
+        AABB.push_back(glm::vec3(max_x, max_y, min_z)); //top head left
+        AABB.push_back(glm::vec3(max_x, min_y, max_z)); //bottom tail left
+        AABB.push_back(glm::vec3(min_x, min_y, max_z)); //bottom tail right
+        AABB.push_back(glm::vec3(min_x, min_y, min_z)); //bottom head right?
+        AABB.push_back(glm::vec3(max_x, min_y, min_z)); //bottom head left?
     }
 
     glm::vec3 getCameraPos()
@@ -86,8 +91,19 @@ public:
         return (frontAnchor - backAnchor);
     }
 
+    float getVelocity()
+    {
+        return velocity;
+    }
+
+    void setVelocity(const float &v)
+    {
+        velocity = v;
+    }
+
     void processKeyboard(Movement dir, float deltaTime)
     {
+        //std::cout << AABB[6].x << ' ' << AABB[6].z << std::endl;
         if(dir == A)
             turnLeft(deltaTime);
         else if(dir == D)

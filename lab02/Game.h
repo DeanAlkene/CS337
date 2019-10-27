@@ -126,11 +126,10 @@ public:
       shader_road("./vertex.glsl", "./fragment_NT.glsl"),
       shader_car("./vertex.glsl", "./fragment_NT.glsl"),
       shader_skybox("./vertex_skb.glsl", "./fragment_skb.glsl"),
-      road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj")),
+      road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj"), std::string("/home/dean/CS337/Models/Scene/Barrier.obj")),
       car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"), 10.0, 2.0),
       skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga")),
-      scene(),
-      barrier("/home/dean/CS337/Models/Scene/Barrier.obj")
+      scene()
     {
         camera[0] = Camera(glm::vec3(0.0f, 10.0f, 10.0f));
         lightPos[0] = glm::vec3(0.5f, 1.0f, 1.0f);
@@ -231,17 +230,35 @@ public:
             camera[cameraType].processKeyboard(X, deltaTime);
 
         if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        {
             car.processKeyboard(W, deltaTime);
+            road.collisionDetect(car);
+        }
         if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        {
             car.processKeyboard(A, deltaTime);
+            road.collisionDetect(car);
+        }
         if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        {
             car.processKeyboard(S, deltaTime);
+            road.collisionDetect(car);
+        }
         if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        {
             car.processKeyboard(D, deltaTime);
+            road.collisionDetect(car);
+        }
         if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        {
             car.processKeyboard(Q, deltaTime);
+            road.collisionDetect(car);
+        }
         if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        {
             car.processKeyboard(E, deltaTime);
+            road.collisionDetect(car);
+        }
 
         if(glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
             changeView(deltaTime);

@@ -6,12 +6,35 @@
 #define LAB02_BARRIER_H
 
 #include "Utils.h"
+#include "Car.h"
+
 
 struct Point2D
 {
+    friend std::ostream &operator<<(std::ostream &os, const Point2D &p);
     float x;
     float z;
+
+    Point2D()
+    {
+        x = 0.0f;
+        z = 0.0f;
+    }
+
+    Point2D(const float &x, const float &z)
+    {
+        this->x = x;
+        this->z = z;
+    }
+
+
 };
+
+std::ostream &operator<<(std::ostream &os, const Point2D &p)
+{
+    os << p.x << ' ' << p.z;
+    return os;
+}
 
 struct cmp
 {
@@ -26,11 +49,20 @@ struct cmp
 
 struct Segment
 {
+    int id;
     float A, B, C;
     Point2D p1, p2;
+    glm::vec3 dir;
+
+    Segment()
+    {
+        id = -1;
+    }
 
     Segment(float p1_x, float p1_z, float p2_x, float p2_z)
     {
+        id = 0;
+
         p1.x = p1_x;
         p1.z = p1_z;
         p2.x = p2_x;
@@ -39,6 +71,8 @@ struct Segment
         A = p2.z - p1.z;
         B = p1.x - p2.x;
         C = p2.x * p1.z - p1.x * p2.z;
+
+        dir = glm::normalize(glm::vec3(p2.x-p1.x ,0.0f, p2.z-p1.z));
     }
 
     float calcDist(const Point2D &p)
@@ -47,33 +81,21 @@ struct Segment
         float denominator = sqrt(A * A + B * B);
         return (divisor / denominator);
     }
-};
 
-
-struct quadTreeNode
-{
-    quadTreeNode* children[4];
-    std::vector<Segment>* segments;
-
-    quadTreeNode()
+    void setID(const int &ID)
     {
-        for (int i = 0; i < 4; ++i)
-        {
-            children[i] = nullptr;
-        }
-        segments = nullptr;
+        id = ID;
     }
 };
 
 class Barrier
 {
+    friend class Road;
 private:
-    std::vector<Point2D> outerEdge;
-    std::vector<Point2D> innerEdge;
+    std::vector<Segment> segments;
 
-    void loadEdge(const char* path)
+    void loadSegment(const std::string &path)
     {
-        std::map<Point2D, int, cmp> edge;
         std::ifstream in;
         std::string line;
         in.open(path);
@@ -85,28 +107,74 @@ private:
 
         while(getline(in, line))
         {
-            if(line.substr(0,2) == "v ")
+            if(line.substr(0,2) == "o ")
             {
-                std::istringstream is(line.substr(2));
-                Point2D p;
-                float dumb;
-                is >> p.x >> dumb >> p.z;
-                edge[p] = 0;
+                if(line[2] == 'T')
+                {
+                    std::cout << "T here" << std::endl;
+                    int lines = 0;
+                    float x[2], z[2];
+                    while(getline(in, line))
+                    {
+                        if(line.substr(0,2) == "v ")
+                        {
+                            if(lines < 2)
+                            {
+                                std::istringstream is(line.substr(2));
+                                float dumb;
+                                is >> x[lines] >> dumb >> z[lines];
+                                lines++;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    segments.push_back(Segment(x[0], z[0], x[1], z[1]));
+                }
+                else
+                {
+                    float max_x, max_z, min_x, min_z;
+                    max_x = max_z = -MAX;
+                    min_x = min_z = MAX;
+                    while(getline(in, line))
+                    {
+                        if(line.substr(0,2) == "v ")
+                        {
+                            std::istringstream is(line.substr(2));
+                            float x, z;
+                            float dumb;
+                            is >> x >> dumb >> z;
+                            max_x = std::max(max_x, x);
+                            max_z = std::max(max_z, z);
+                            min_x = std::min(min_x, x);
+                            min_z = std::min(min_z, z);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    segments.push_back(Segment(max_x, max_z, min_x, min_z));
+                }
             }
         }
         in.close();
 
-        for(auto it : edge)
+        for(auto it : segments)
         {
-            std::cout << it.first.x << ' ' << it.first.z << std::endl;
+            std::cout << it.p1 << ' ' << it.p2 << std::endl;
         }
     }
 
 public:
-    Barrier(const char* path)
+    Barrier(const std::string &path)
     {
-        loadEdge(path);
+        loadSegment(path);
     }
+
+    Barrier() = default;
 };
 
 #endif //LAB02_BARRIER_H
