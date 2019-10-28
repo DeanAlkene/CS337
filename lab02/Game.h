@@ -47,7 +47,6 @@ public:
     Car car;
     Skybox skybox;
     Scene scene;
-    Barrier barrier;
 
     void configShader(Shader &shader)
     {

@@ -72,14 +72,33 @@ struct Segment
         B = p1.x - p2.x;
         C = p2.x * p1.z - p1.x * p2.z;
 
-        dir = glm::normalize(glm::vec3(p2.x-p1.x ,0.0f, p2.z-p1.z));
+        dir = glm::normalize(glm::vec3(p2.x-p1.x ,0.0f, p2.z-p1.z)); //P1->P2
     }
 
-    float calcDist(const Point2D &p)
+    float calcDist(const Point2D q)
     {
-        float divisor = fabs(A * p.x + B * p.z + C);
-        float denominator = sqrt(A * A + B * B);
-        return (divisor / denominator);
+        float r = glm::dot(glm::vec3(q.x - p1.x, 0.0f, q.z - p1.z), glm::vec3(p2.x-p1.x ,0.0f, p2.z-p1.z));
+        float length = glm::length(glm::vec3(p2.x-p1.x ,0.0f, p2.z-p1.z));
+        r = r / (length * length);
+//        if(r > 1.0f)
+//            return glm::distance(glm::vec3(p2.x, 0.0f, p2.z), glm::vec3(q.x, 0.0f, q.z));
+//        else if(r < 0.0f)
+//            return glm::distance(glm::vec3(p1.x, 0.0f, p1.z), glm::vec3(q.x, 0.0f, q.z));
+//        else
+        if(r > 0.0f && r < 1.0f)
+        {
+            float divisor = fabs(A * q.x + B * q.z + C);
+            float denominator = sqrt(A * A + B * B);
+            if(divisor / denominator < 5.0f) {
+                std::cout << "In: " << p1 << ' ' << p2 << "    " << A << ' ' << B << ' ' << C << std::endl;
+                std::cout << "Test: " << q << " Distance: " << divisor / denominator << std::endl;
+            }
+            return (divisor / denominator);
+        }
+        else
+        {
+            return  -1.0f;
+        }
     }
 
     void setID(const int &ID)
@@ -111,7 +130,6 @@ private:
             {
                 if(line[2] == 'T')
                 {
-                    std::cout << "T here" << std::endl;
                     int lines = 0;
                     float x[2], z[2];
                     while(getline(in, line))
@@ -162,10 +180,11 @@ private:
         }
         in.close();
 
-        for(auto it : segments)
-        {
-            std::cout << it.p1 << ' ' << it.p2 << std::endl;
-        }
+//        for(auto it : segments)
+//        {
+//            std::cout << it.p1 << ' ' << it.p2 << std::endl;
+//            std::cout << it.A << ' ' << it.B << ' ' << it.C << std::endl;
+//        }
     }
 
 public:

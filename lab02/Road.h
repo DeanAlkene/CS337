@@ -9,7 +9,7 @@
 #include "Car.h"
 #include "Barrier.h"
 
-const float epsilon = 0.5f;
+const float epsilon = 1.0e-3f;
 
 class Road : public Object
 {
@@ -21,18 +21,19 @@ public:
 
     void collisionDetect(Car &car)
     {
-        //std::vector<Segment> collideSegments;
-        //collideSegments.resize(4);
-
         for(int i = 4; i < 8; ++i)
         {
             for(auto it : barrier.segments)
             {
-                float dist = fabs(it.calcDist(Point2D(car.AABB[i].z, car.AABB[i].x)));
+                float dist = it.calcDist(Point2D(car.AABB[i].x, car.AABB[i].z));
+                if(dist < 0)
+                    continue;
                 if(dist < epsilon)
                 {
-                    //collideSegments[i-4] = it;
-                    std::cout << "Collision Detected! " << it.p1 << ' ' << it.p2 << std::endl; //DEBUG
+//                    std::cout << "Collision Detected! " << dist << std::endl;
+//                    std::cout << it.p1 << ' ' << it.p2 << ' ' << it.A << ' ' << it.B << ' ' << it.C << std::endl;
+//                    std::cout << car.AABB[i].x << ' ' << car.AABB[i].z << std::endl; //DEBUG
+//                    std::cout << std::endl;
                     glm::vec3 carDir = glm::normalize(car.getDir());
                     carDir.y = 0.0f;
                     float angle = glm::acos(glm::dot(carDir, it.dir));
@@ -60,8 +61,6 @@ public:
                 }
             }
         }
-        std::cout << std::endl;
-
     }
 };
 

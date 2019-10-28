@@ -8,7 +8,7 @@
 
 #include "Object.h"
 
-const float MAX = 1.0e-9;
+const float MAX = 1.0e9;
 
 class Car : public Object
 {
@@ -40,9 +40,9 @@ public:
     {
         model = glm::mat4(1.0f);
         getAABB();
-        leftTurnCenter = AABB[5] + glm::vec3(0.0f, 0.0f, -1.5f);
+        leftTurnCenter = AABB[6] + glm::vec3(0.0f, 0.0f, 1.5f);
         leftTurnCenter = glm::vec3(leftTurnCenter.x, 0.0f, leftTurnCenter.z);
-        rightTurnCenter = AABB[4] + glm::vec3(0.0f, 0.0f, -1.5f);
+        rightTurnCenter = AABB[7] + glm::vec3(0.0f, 0.0f, 1.5f);
         rightTurnCenter = glm::vec3(rightTurnCenter.x, 0.0f, rightTurnCenter.z);
         frontAnchor = glm::vec3(0.0f, 0.0f, 0.0f);
         backAnchor = glm::vec3(0.0f, 0.0f, -1.0f);
