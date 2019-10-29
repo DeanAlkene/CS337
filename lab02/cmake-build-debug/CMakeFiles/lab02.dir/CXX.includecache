@@ -21,6 +21,8 @@ Object.h
 /home/dean/CS337/lab02/Car.h
 Object.h
 /home/dean/CS337/lab02/Object.h
+Barrier.h
+/home/dean/CS337/lab02/Barrier.h
 
 /home/dean/CS337/lab02/Game.h
 Utils.h
@@ -35,8 +37,6 @@ Skybox.h
 /home/dean/CS337/lab02/Skybox.h
 Car.h
 /home/dean/CS337/lab02/Car.h
-Road.h
-/home/dean/CS337/lab02/Road.h
 Scene.h
 /home/dean/CS337/lab02/Scene.h
 Window.h
@@ -56,19 +56,9 @@ Utils.h
 Mesh.h
 /home/dean/CS337/lab02/Mesh.h
 
-/home/dean/CS337/lab02/Road.h
-Object.h
-/home/dean/CS337/lab02/Object.h
-Car.h
-/home/dean/CS337/lab02/Car.h
-Barrier.h
-/home/dean/CS337/lab02/Barrier.h
-
 /home/dean/CS337/lab02/Scene.h
 Object.h
 /home/dean/CS337/lab02/Object.h
-Road.h
-/home/dean/CS337/lab02/Road.h
 
 /home/dean/CS337/lab02/Shader.h
 Utils.h

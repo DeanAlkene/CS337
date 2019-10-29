@@ -7,16 +7,19 @@
 
 
 #include "Object.h"
+#include "Barrier.h"
 
-const float MAX = 1.0e9;
+const float epsilon = 0.2f;
 
 class Car : public Object
 {
-    friend class Road;
 private:
     float velocity;
     float acceleration;
     float turnRadius;
+    float length;
+    float height;
+    float width;
     glm::mat4 model;
     glm::vec3 leftTurnCenter;
     glm::vec3 rightTurnCenter;
@@ -40,13 +43,13 @@ public:
     {
         model = glm::mat4(1.0f);
         getAABB();
-        leftTurnCenter = AABB[6] + glm::vec3(0.0f, 0.0f, 1.5f);
+        leftTurnCenter = AABB[6] + glm::vec3(0.0f, 0.0f, length / 8.0f);
         leftTurnCenter = glm::vec3(leftTurnCenter.x, 0.0f, leftTurnCenter.z);
-        rightTurnCenter = AABB[7] + glm::vec3(0.0f, 0.0f, 1.5f);
+        rightTurnCenter = AABB[7] + glm::vec3(0.0f, 0.0f, length / 8.0f);
         rightTurnCenter = glm::vec3(rightTurnCenter.x, 0.0f, rightTurnCenter.z);
         frontAnchor = glm::vec3(0.0f, 0.0f, 0.0f);
         backAnchor = glm::vec3(0.0f, 0.0f, -1.0f);
-        camPos = glm::vec3(0.0f, 2.0f, -2.5f);
+        camPos = glm::vec3(0.0f, height * 7.0f / 8.0f, AABB[6].z + length / 4.0f);
         turnRadius = 10.0f;
     }
 
@@ -65,7 +68,6 @@ public:
                 max_z = std::max(meshes[i].vertices[j].Position.z, max_z);
             }
         }
-        std::cout << min_x << ' ' << min_y << ' ' << min_z << ' ' << max_x << ' ' << max_y << ' ' << max_z << std::endl;
         AABB.push_back(glm::vec3(max_x, max_y, max_z)); //top tail left
         AABB.push_back(glm::vec3(min_x, max_y, max_z)); //top tail right
         AABB.push_back(glm::vec3(min_x, max_y, min_z)); //top head right
@@ -74,6 +76,9 @@ public:
         AABB.push_back(glm::vec3(min_x, min_y, max_z)); //bottom tail right
         AABB.push_back(glm::vec3(min_x, min_y, min_z)); //bottom head right?
         AABB.push_back(glm::vec3(max_x, min_y, min_z)); //bottom head left?
+        length = max_z - min_z;
+        height = max_y - min_y;
+        width = max_x - min_x;
     }
 
     glm::vec3 getCameraPos()
@@ -91,19 +96,8 @@ public:
         return (frontAnchor - backAnchor);
     }
 
-    float getVelocity()
-    {
-        return velocity;
-    }
-
-    void setVelocity(const float &v)
-    {
-        velocity = v;
-    }
-
     void processKeyboard(Movement dir, float deltaTime)
     {
-        //std::cout << AABB[6].x << ' ' << AABB[6].z << std::endl;
         if(dir == A)
             turnLeft(deltaTime);
         else if(dir == D)
@@ -116,7 +110,6 @@ public:
             velocity += acceleration * deltaTime;
         else if(dir == E)
             velocity -= acceleration * deltaTime;
-
     }
 
     void turnLeft(float deltaTime)
@@ -152,7 +145,6 @@ public:
         glm::mat4 move(1.0f);
         move = glm::translate(move, -deltaTime * velocity * (frontAnchor - backAnchor));
         model = move * model;
-        //printMat4(model);
         update(move);
     }
 
@@ -161,8 +153,63 @@ public:
         glm::mat4 move(1.0f);
         move = glm::translate(move, deltaTime * velocity * (frontAnchor - backAnchor));
         model = move * model;
-        //printMat4(model);
         update(move);
+    }
+
+    void collisionDetect(Barrier &barrier, Movement move)
+    {
+        float angle;
+        bool detected = false;
+        for(int i = 4; i < 8; ++i)
+        {
+            for(auto it : barrier.segments)
+            {
+                float dist = it.calcDist(Point2D(AABB[i].x, AABB[i].z));
+                if(dist < 0)
+                    continue;
+                if(dist < epsilon)
+                {
+                    glm::vec3 carDir = glm::normalize(this->getDir());
+                    carDir.y = 0.0f;
+                    angle = glm::acos(glm::dot(carDir, it.dir)) * 180.0f / glm::pi<float>();
+                    if(angle > 90.0f)
+                    {
+                        angle = 180.0f - angle;
+                    }
+                    detected = true;
+                    break;
+                }
+            }
+            if(detected)
+                break;
+        }
+        if(detected)
+        {
+            float factor = 0.05f;
+            if(move == W)
+            {
+                goBackward(factor);
+            }
+            else if(move == S)
+            {
+                goForward(factor);
+            }
+            else if(move == A)
+            {
+                if(angle < 45.0f)
+                    turnRight(factor);
+                else
+                    goBackward(factor / 2.0f);
+            }
+            else if(move == D)
+            {
+                if(angle < 45.0f)
+                    turnLeft(factor);
+                else
+                    goBackward(factor / 2.0f);
+            }
+
+        }
     }
 };
 

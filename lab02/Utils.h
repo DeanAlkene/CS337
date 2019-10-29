@@ -32,6 +32,8 @@
 const int WINDOW_WIDTH = 1200;
 const int WINDOW_HEIGHT = 800;
 
+const float MAX = 1.0e9;
+
 enum Movement
 {
     UP,

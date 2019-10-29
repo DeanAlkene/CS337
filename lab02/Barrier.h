@@ -8,7 +8,6 @@
 #include "Utils.h"
 #include "Car.h"
 
-
 struct Point2D
 {
     friend std::ostream &operator<<(std::ostream &os, const Point2D &p);
@@ -89,10 +88,10 @@ struct Segment
         {
             float divisor = fabs(A * q.x + B * q.z + C);
             float denominator = sqrt(A * A + B * B);
-            if(divisor / denominator < 5.0f) {
-                std::cout << "In: " << p1 << ' ' << p2 << "    " << A << ' ' << B << ' ' << C << std::endl;
-                std::cout << "Test: " << q << " Distance: " << divisor / denominator << std::endl;
-            }
+//            if(divisor / denominator < 5.0f) {
+//                std::cout << "In: " << p1 << ' ' << p2 << "    " << A << ' ' << B << ' ' << C << std::endl;
+//                std::cout << "Test: " << q << " Distance: " << divisor / denominator << std::endl;
+//            }
             return (divisor / denominator);
         }
         else
@@ -109,7 +108,7 @@ struct Segment
 
 class Barrier
 {
-    friend class Road;
+    friend class Car;
 private:
     std::vector<Segment> segments;
 

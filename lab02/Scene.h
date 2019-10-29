@@ -6,7 +6,6 @@
 #define LAB02_SCENE_H
 
 #include "Object.h"
-#include "Road.h"
 
 class Scene
 {

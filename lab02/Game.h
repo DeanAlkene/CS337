@@ -11,7 +11,6 @@
 #include "Object.h"
 #include "Skybox.h"
 #include "Car.h"
-#include "Road.h"
 #include "Scene.h"
 #include "Window.h"
 #include "Barrier.h"
@@ -31,33 +30,31 @@ public:
     bool firstMouse;
     bool cameraType;
     bool cursorState;
+    bool collisionDetectState;
 
     Window window;
 
     Camera camera[2];
 
-    glm::vec3 lightPos[2];
+    glm::vec3 lightPos;
 
     Shader shader_scene;
     Shader shader_road;
     Shader shader_car;
     Shader shader_skybox;
 
-    Road road;
+    Object road;
+    Barrier barrier;
     Car car;
     Skybox skybox;
     Scene scene;
 
     void configShader(Shader &shader)
     {
-        shader.setVec3("light[0].position", lightPos[0]);
-        shader.setVec3("light[0].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        shader.setVec3("light[0].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        shader.setVec3("light[0].specular", glm::vec3(0.3f, 0.3f, 0.3f));
-        shader.setVec3("light[1].position", lightPos[1]);
-        shader.setVec3("light[1].ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        shader.setVec3("light[1].diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        shader.setVec3("light[1].specular", glm::vec3(0.3f, 0.3f, 0.3f));
+        shader.setVec3("light.position", lightPos);
+        shader.setVec3("light.ambient", glm::vec3(0.5f, 0.5f, 0.5f));
+        shader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        shader.setVec3("light.specular", glm::vec3(0.5f, 0.5f, 0.5f));
         shader.setVec3("viewPos", camera[cameraType].getPosition());
         shader.setFloat("alpha", ALPHA);
     }
@@ -125,14 +122,14 @@ public:
       shader_road("./vertex.glsl", "./fragment_NT.glsl"),
       shader_car("./vertex.glsl", "./fragment_NT.glsl"),
       shader_skybox("./vertex_skb.glsl", "./fragment_skb.glsl"),
-      road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj"), std::string("/home/dean/CS337/Models/Scene/Barrier.obj")),
+      road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj")),
+      barrier(std::string("/home/dean/CS337/Models/Scene/Barrier.obj")),
       car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"), 10.0, 2.0),
       skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga")),
       scene()
     {
-        camera[0] = Camera(glm::vec3(0.0f, 10.0f, 10.0f));
-        lightPos[0] = glm::vec3(0.5f, 1.0f, 1.0f);
-        lightPos[1] = glm::vec3(-0.5f, 1.0f, 1.0f);
+        camera[0] = Camera(glm::vec3(35.0f, 80.0f, 55.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -45.0f);
+        lightPos = glm::vec3(250.0f, 500.0f, 200.0f);
         lastX = WINDOW_WIDTH / 2.0f;
         lastY = WINDOW_HEIGHT / 2.0f;
         deltaTime = 0.0f;
@@ -140,6 +137,7 @@ public:
         firstMouse = true;
         cameraType = false;
         cursorState = true;
+        collisionDetectState = true;
     }
     void init()
     {
@@ -231,41 +229,45 @@ public:
         if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         {
             car.processKeyboard(W, deltaTime);
-            road.collisionDetect(car);
+            if(collisionDetectState)
+                car.collisionDetect(barrier, W);
         }
         if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         {
             car.processKeyboard(A, deltaTime);
-            road.collisionDetect(car);
+            if(collisionDetectState)
+                car.collisionDetect(barrier, A);
         }
         if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
         {
             car.processKeyboard(S, deltaTime);
-            road.collisionDetect(car);
+            if(collisionDetectState)
+                car.collisionDetect(barrier, S);
         }
         if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         {
             car.processKeyboard(D, deltaTime);
-            road.collisionDetect(car);
+            if(collisionDetectState)
+                car.collisionDetect(barrier, D);
         }
         if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
         {
             car.processKeyboard(Q, deltaTime);
-            road.collisionDetect(car);
         }
         if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         {
             car.processKeyboard(E, deltaTime);
-            road.collisionDetect(car);
         }
 
+        if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+            switchCollisionDetect();
         if(glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-            changeView(deltaTime);
+            changeView();
         if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
             changeCursorPos(window);
     }
 
-    void changeView(float deltaTime)
+    void changeView()
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         cameraType = !cameraType;
@@ -279,6 +281,12 @@ public:
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         else
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+
+    void switchCollisionDetect()
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        collisionDetectState = !collisionDetectState;
     }
 };
 

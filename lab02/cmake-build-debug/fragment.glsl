@@ -1,6 +1,5 @@
 #version 420 core
 
-#define NR_LIGHTS 2
 struct Light
 {
     vec3 position;
@@ -25,7 +24,7 @@ uniform sampler2D texture_normal1;
 uniform sampler2D texture_height1;
 
 uniform vec3 viewPos;
-uniform Light light[NR_LIGHTS];
+uniform Light light;
 uniform float alpha;
 
 vec3 calcLight(Light light)
@@ -48,10 +47,6 @@ vec3 calcLight(Light light)
 
 void main()
 {
-    vec3 result = vec3(0.0f, 0.0f, 0.0f);
-    for(int i = 0; i < NR_LIGHTS; ++i)
-    {
-        result += calcLight(light[i]);
-    }
+    vec3 result = calcLight(light);
     FragColor = vec4(result, alpha);
 }
