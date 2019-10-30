@@ -14,6 +14,7 @@
 #include "Scene.h"
 #include "Window.h"
 #include "Barrier.h"
+#include "Shadow.h"
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -31,6 +32,7 @@ public:
     bool cameraType;
     bool cursorState;
     bool collisionDetectState;
+    bool shadowState;
 
     Window window;
 
@@ -42,12 +44,15 @@ public:
     Shader shader_road;
     Shader shader_car;
     Shader shader_skybox;
+    Shader shader_shadow;
+    Shader shader_debug;
 
     Object road;
     Barrier barrier;
     Car car;
     Skybox skybox;
     Scene scene;
+    Shadow shadow;
 
     void configShader(Shader &shader)
     {
@@ -56,7 +61,15 @@ public:
         shader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
         shader.setVec3("light.specular", glm::vec3(0.5f, 0.5f, 0.5f));
         shader.setVec3("viewPos", camera[cameraType].getPosition());
+        shader.setMat4("lightSpaceMatrix", shadow.getLightSpaceMatrix());
+        shader.setBool("shadows", shadowState);
         shader.setFloat("alpha", ALPHA);
+        shader.setInt("texture_shadow", 5);
+        if(shadowState)
+        {
+            glActiveTexture(GL_TEXTURE0 + 5);
+            glBindTexture(GL_TEXTURE_2D, shadow.getShadowTexture());
+        }
     }
 
     void configScene()
@@ -122,14 +135,20 @@ public:
       shader_road("./vertex.glsl", "./fragment_NT.glsl"),
       shader_car("./vertex.glsl", "./fragment_NT.glsl"),
       shader_skybox("./vertex_skb.glsl", "./fragment_skb.glsl"),
+      shader_shadow("./vertex_shadow.glsl", "./fragment_shadow.glsl"),
+      shader_debug("./vertex_debug.glsl", "./fragment_debug.glsl"),
       road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads.obj")),
       barrier(std::string("/home/dean/CS337/Models/Scene/Barrier.obj")),
       car(std::string("/home/dean/CS337/Models/Scene/Car/Car.obj"), 10.0, 2.0),
       skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga")),
-      scene()
+      scene(),
+      shadow()
     {
-        camera[0] = Camera(glm::vec3(35.0f, 80.0f, 55.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -45.0f);
-        lightPos = glm::vec3(250.0f, 500.0f, 200.0f);
+        //camera[0] = Camera(glm::vec3(35.0f, 80.0f, 55.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -45.0f);
+//        lightPos = glm::vec3(250.0f, 500.0f, 200.0f);
+        lightPos = glm::vec3(200.0f, 150.0f, 200.0f);
+        camera[0] = Camera(glm::vec3(-30.0f, 50.0f, -50.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 45.0f, -45.0f);
+        shadow.setMatrices(lightPos);
         lastX = WINDOW_WIDTH / 2.0f;
         lastY = WINDOW_HEIGHT / 2.0f;
         deltaTime = 0.0f;
@@ -138,6 +157,7 @@ public:
         cameraType = false;
         cursorState = true;
         collisionDetectState = true;
+        shadowState = true;
     }
     void init()
     {
@@ -160,38 +180,60 @@ public:
             //Keyboard Input
             processInput(window.window);
 
-            //Rendering Operations
-            glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
             float timeValue = glfwGetTime();
             deltaTime = timeValue - lastFrame;
             lastFrame = timeValue;
             camera[1].updatePos(car.getCameraPos());
             camera[1].updateFront(car.getDir());
 
+            glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             /*------------------------------------------------------------------------------*/
+            if(shadowState)
+            {
+                shader_shadow.activate();
+                shader_shadow.setMat4("lightSpaceMatrix", shadow.getLightSpaceMatrix());
+                glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+                glBindFramebuffer(GL_FRAMEBUFFER, shadow.getFrameBufferFBO());
+                glClear(GL_DEPTH_BUFFER_BIT);
+                glm::mat4 model = glm::mat4(1.0f);
+                shader_shadow.setMat4("model", model);
+                scene.Draw(shader_shadow);
+                shader_shadow.setMat4("model", model);
+                road.Draw(shader_shadow);
+                model = car.getModel();
+                shader_shadow.setMat4("model", model);
+                car.Draw(shader_shadow);
+                glBindFramebuffer(GL_FRAMEBUFFER, 0);
+                shader_shadow.deactivate();
+            }
+            /*------------------------------------------------------------------------------*/
+//            glViewport(0, 0, window.width, window.height);
+//            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//            shader_debug.activate();
+//            shader_debug.setInt("depthMap", 5);
+//            glActiveTexture(GL_TEXTURE0 + 5);
+//            glBindTexture(GL_TEXTURE_2D, shadow.getShadowTexture());
+//            shadow.debugDraw();
+//            shader_debug.deactivate();
+            /*------------------------------------------------------------------------------*/
+            glViewport(0, 0, window.width, window.height);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             shader_scene.activate();
             configScene();
             scene.Draw(shader_scene);
             shader_scene.deactivate();
-            /*------------------------------------------------------------------------------*/
 
-            /*------------------------------------------------------------------------------*/
             shader_road.activate();
             configRoad();
             road.Draw(shader_road);
             shader_road.deactivate();
-            /*------------------------------------------------------------------------------*/
 
-            /*------------------------------------------------------------------------------*/
             shader_car.activate();
             configCar();
             car.Draw(shader_car);
             shader_car.deactivate();
-            /*------------------------------------------------------------------------------*/
 
-            /*------------------------------------------------------------------------------*/
             glDepthFunc(GL_LEQUAL);
             shader_skybox.activate();
             configSkybox();
@@ -262,18 +304,20 @@ public:
         if(glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
             switchCollisionDetect();
         if(glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-            changeView();
+            switchView();
         if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-            changeCursorPos(window);
+            switchCursorPos(window);
+        if(glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS)
+            switchShadowState();
     }
 
-    void changeView()
+    void switchView()
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         cameraType = !cameraType;
     }
 
-    void changeCursorPos(GLFWwindow* window)
+    void switchCursorPos(GLFWwindow* window)
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         cursorState = !cursorState;
@@ -287,6 +331,12 @@ public:
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
         collisionDetectState = !collisionDetectState;
+    }
+
+    void switchShadowState()
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        shadowState = !shadowState;
     }
 };
 

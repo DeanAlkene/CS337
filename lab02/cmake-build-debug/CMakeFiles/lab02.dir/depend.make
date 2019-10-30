@@ -11,6 +11,7 @@ CMakeFiles/lab02.dir/main.cpp.o: ../Mesh.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Object.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Scene.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Shader.h
+CMakeFiles/lab02.dir/main.cpp.o: ../Shadow.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Skybox.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Utils.h
 CMakeFiles/lab02.dir/main.cpp.o: ../Window.h

@@ -43,6 +43,8 @@ Window.h
 /home/dean/CS337/lab02/Window.h
 Barrier.h
 /home/dean/CS337/lab02/Barrier.h
+Shadow.h
+/home/dean/CS337/lab02/Shadow.h
 
 /home/dean/CS337/lab02/Mesh.h
 Utils.h
@@ -61,6 +63,10 @@ Object.h
 /home/dean/CS337/lab02/Object.h
 
 /home/dean/CS337/lab02/Shader.h
+Utils.h
+/home/dean/CS337/lab02/Utils.h
+
+/home/dean/CS337/lab02/Shadow.h
 Utils.h
 /home/dean/CS337/lab02/Utils.h
 
