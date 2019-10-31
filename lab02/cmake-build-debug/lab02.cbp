@@ -102,6 +102,9 @@
 		<Unit filename="/home/dean/CS337/lab02/Object.h">
 			<Option target="lab02"/>
 		</Unit>
+		<Unit filename="/home/dean/CS337/lab02/Road.h">
+			<Option target="lab02"/>
+		</Unit>
 		<Unit filename="/home/dean/CS337/lab02/Scene.h">
 			<Option target="lab02"/>
 		</Unit>

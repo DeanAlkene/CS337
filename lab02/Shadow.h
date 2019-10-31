@@ -7,8 +7,8 @@
 
 #include "Utils.h"
 
-const int SHADOW_WIDTH = 2048;
-const int SHADOW_HEIGHT = 2048;
+const int SHADOW_WIDTH = 4096;
+const int SHADOW_HEIGHT = 4096;
 
 GLfloat quadVertices[] = {
         // Positions        // Texture Coords
@@ -64,7 +64,7 @@ public:
 
     unsigned int getFrameBufferFBO()
     {
-        return  FBO;
+        return FBO;
     }
 
     void setMatrices(const glm::vec3 &lightPos)

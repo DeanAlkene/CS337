@@ -39,6 +39,8 @@ Car.h
 /home/dean/CS337/lab02/Car.h
 Scene.h
 /home/dean/CS337/lab02/Scene.h
+Road.h
+/home/dean/CS337/lab02/Road.h
 Window.h
 /home/dean/CS337/lab02/Window.h
 Barrier.h
@@ -57,6 +59,14 @@ Utils.h
 /home/dean/CS337/lab02/Utils.h
 Mesh.h
 /home/dean/CS337/lab02/Mesh.h
+Shadow.h
+/home/dean/CS337/lab02/Shadow.h
+
+/home/dean/CS337/lab02/Road.h
+Utils.h
+/home/dean/CS337/lab02/Utils.h
+Object.h
+/home/dean/CS337/lab02/Object.h
 
 /home/dean/CS337/lab02/Scene.h
 Object.h

@@ -39,7 +39,8 @@ private:
         }
     }
 public:
-    Car(const std::string &path, float v, float a) : Object(path), velocity(v), acceleration(a)
+    Shadow shadow;
+    Car(const std::string &path, float v, float a) : Object(path), velocity(v), acceleration(a), shadow()
     {
         model = glm::mat4(1.0f);
         getAABB();

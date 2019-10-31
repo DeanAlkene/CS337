@@ -7,11 +7,13 @@
 
 #include "Utils.h"
 #include "Mesh.h"
+#include "Shadow.h"
 
 unsigned int TextureFromFile(const char *path, const std::string &dir, bool gamma = false);
 
 class Object
 {
+    friend class Game;
 protected:
     std::vector<Mesh> meshes;
     std::string directory;
