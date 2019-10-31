@@ -7,8 +7,8 @@
 
 #include "Utils.h"
 
-const int SHADOW_WIDTH = 4096;
-const int SHADOW_HEIGHT = 4096;
+const int SHADOW_WIDTH = 8192;
+const int SHADOW_HEIGHT = 8192;
 
 GLfloat quadVertices[] = {
         // Positions        // Texture Coords
@@ -71,8 +71,8 @@ public:
     {
 //        lightProjection = glm::ortho(-lightPos.x, lightPos.x, -lightPos.x, lightPos.x, 1.0f, lightPos.z);
 //        lightView = glm::lookAt(lightPos, glm::vec3(lightPos.x / 2.0f, 0.0f, lightPos.z / 2.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        lightProjection = glm::ortho(-500.0f, 500.0f, -500.0f, 500.0f, 1.0f, 800.0f);
-        lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+        lightProjection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, 1.0f, 100.0f);
+        lightView = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0, 1.0, 0.0));
         lightSpaceMatrix = lightProjection * lightView;
     }
 

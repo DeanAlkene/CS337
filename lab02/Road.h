@@ -11,10 +11,7 @@
 class Road : public Object
 {
 public:
-    Shadow shadow;
-    Road(const std::string &path) : Object(path), shadow() {}
-
-    glm::mat4 getModel() {return glm::mat4(1.0f);}
+    Road(const std::string &path) : Object(path) {}
 };
 
 #endif //LAB02_ROAD_H

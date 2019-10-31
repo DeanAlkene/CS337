@@ -39,8 +39,7 @@ private:
         }
     }
 public:
-    Shadow shadow;
-    Car(const std::string &path, float v, float a) : Object(path), velocity(v), acceleration(a), shadow()
+    Car(const std::string &path, float v, float a) : Object(path), velocity(v), acceleration(a)
     {
         model = glm::mat4(1.0f);
         getAABB();
@@ -51,7 +50,7 @@ public:
         frontAnchor = glm::vec3(0.0f, 0.0f, 0.0f);
         backAnchor = glm::vec3(0.0f, 0.0f, -1.0f);
         camPos = glm::vec3(0.0f, height * 7.0f / 8.0f, AABB[6].z + length / 4.0f);
-        turnRadius = 10.0f;
+        turnRadius = 1.0f;
     }
 
     void getAABB()
@@ -119,7 +118,7 @@ public:
         axisTrans = glm::translate(axisTrans, leftTurnCenter);
 
         float angularVelocity = velocity / turnRadius;
-        float angle = angularVelocity * deltaTime;
+        float angle = angularVelocity * deltaTime / turnRadius;
 
         glm::mat4 move(1.0f);
         move = axisTrans * glm::rotate(move, angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::inverse(axisTrans);
@@ -133,7 +132,7 @@ public:
         axisTrans = glm::translate(axisTrans, rightTurnCenter);
 
         float angularVelocity = velocity / turnRadius;
-        float angle = angularVelocity * deltaTime;
+        float angle = angularVelocity * deltaTime / turnRadius;
 
         glm::mat4 move(1.0f);
         move = axisTrans * glm::rotate(move, -angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::inverse(axisTrans);
