@@ -43,7 +43,7 @@ float calcShadow(vec4 fragPosLightSpace)
     vec3 norm =  texture(texture_normal0, TexCoords).rgb;
     norm = normalize(norm * 2.0f - 1.0f);
     vec3 lightDir = normalize(light.position - FragPos);
-    //float bias = max(0.028f * (1.0f - dot(norm, lightDir)), 0.0028f);
+//    float bias = max(0.003f * (1.0f - dot(norm, lightDir)), 0.0003f);
     float bias = 0.0f;
 
     float shadow = 0.0f;

@@ -145,7 +145,7 @@ public:
       scene()
     {
         //camera[0] = Camera(glm::vec3(35.0f, 80.0f, 55.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -45.0f);
-        lightPos = glm::vec3(-6.0f, 5.0f, -6.0f);
+        lightPos = glm::vec3(-8.0f, 10.0f, -8.0f);
         //lightPos = glm::vec3(200.0f, 100.0f, 200.0f);
         camera[0] = Camera(glm::vec3(-3.0f, 5.0f, -5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 45.0f, -45.0f);
         shadow.setMatrices(lightPos);
@@ -191,13 +191,13 @@ public:
             /*------------------------------------------------------------------------------*/
             if(shadowState)
             {
-                //glCullFace(GL_FRONT);
                 glm::mat4 model = glm::mat4(1.0f);
                 shader_shadow.activate();
                 shader_shadow.setMat4("lightSpaceMatrix", shadow.getLightSpaceMatrix());
                 glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
                 glBindFramebuffer(GL_FRAMEBUFFER, shadow.getFrameBufferFBO());
                 glClear(GL_DEPTH_BUFFER_BIT);
+                glCullFace(GL_FRONT);
                 shader_shadow.setMat4("model", model);
                 scene.Draw(shader_shadow);
                 shader_shadow.setMat4("model", model);
@@ -205,9 +205,9 @@ public:
                 model = car.getModel();
                 shader_shadow.setMat4("model", model);
                 car.Draw(shader_shadow);
+                glCullFace(GL_BACK);
                 glBindFramebuffer(GL_FRAMEBUFFER, 0);
                 shader_shadow.deactivate();
-                //glCullFace(GL_BACK);
             }
             /*------------------------------------------------------------------------------*/
 //            glViewport(0, 0, window.width, window.height);

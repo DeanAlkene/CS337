@@ -9,7 +9,7 @@
 #include "Object.h"
 #include "Barrier.h"
 
-const float epsilon = 0.2f;
+const float epsilon = 0.02f;
 
 class Car : public Object
 {
