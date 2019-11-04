@@ -9,7 +9,7 @@
 #include "Object.h"
 #include "Barrier.h"
 
-const float epsilon = 0.02f;
+const float epsilon = 0.01f;
 
 class Car : public Object
 {
@@ -43,9 +43,9 @@ public:
     {
         model = glm::mat4(1.0f);
         getAABB();
-        leftTurnCenter = AABB[6] + glm::vec3(0.0f, 0.0f, length / 8.0f);
+        leftTurnCenter = AABB[6] + glm::vec3(0.0f, 0.0f, 7.0f * length / 8.0f);
         leftTurnCenter = glm::vec3(leftTurnCenter.x, 0.0f, leftTurnCenter.z);
-        rightTurnCenter = AABB[7] + glm::vec3(0.0f, 0.0f, length / 8.0f);
+        rightTurnCenter = AABB[7] + glm::vec3(0.0f, 0.0f, 7.0f * length / 8.0f);
         rightTurnCenter = glm::vec3(rightTurnCenter.x, 0.0f, rightTurnCenter.z);
         frontAnchor = glm::vec3(0.0f, 0.0f, 0.0f);
         backAnchor = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -185,7 +185,7 @@ public:
         }
         if(detected)
         {
-            float factor = 0.05f;
+            float factor = 0.5f;
             if(move == W)
             {
                 goBackward(factor);

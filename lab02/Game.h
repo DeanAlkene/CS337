@@ -145,7 +145,7 @@ public:
       scene()
     {
         //camera[0] = Camera(glm::vec3(35.0f, 80.0f, 55.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -45.0f);
-        lightPos = glm::vec3(-8.0f, 10.0f, -8.0f);
+        lightPos = glm::vec3(-8.0f, 10.0f, -2.0f);
         //lightPos = glm::vec3(200.0f, 100.0f, 200.0f);
         camera[0] = Camera(glm::vec3(-3.0f, 5.0f, -5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 45.0f, -45.0f);
         shadow.setMatrices(lightPos);
@@ -210,14 +210,14 @@ public:
                 shader_shadow.deactivate();
             }
             /*------------------------------------------------------------------------------*/
-//            glViewport(0, 0, window.width, window.height);
-//            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//            shader_debug.activate();
-//            shader_debug.setInt("depthMap", 3);
-//            glActiveTexture(GL_TEXTURE0 + 3);
-//            glBindTexture(GL_TEXTURE_2D, scene.shadow.getShadowTexture());
-//            road.shadow.debugDraw();
-//            shader_debug.deactivate();
+        //    glViewport(0, 0, window.width, window.height);
+        //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //    shader_debug.activate();
+        //    shader_debug.setInt("depthMap", 3);
+        //    glActiveTexture(GL_TEXTURE0 + 3);
+        //    glBindTexture(GL_TEXTURE_2D, shadow.getShadowTexture());
+        //    shadow.debugDraw();
+        //    shader_debug.deactivate();
             /*------------------------------------------------------------------------------*/
             glViewport(0, 0, window.width, window.height);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
