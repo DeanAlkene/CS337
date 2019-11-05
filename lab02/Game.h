@@ -18,7 +18,7 @@
 #include "Shadow.h"
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void reshape_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 class Game
@@ -162,13 +162,14 @@ public:
     void init()
     {
         glfwMakeContextCurrent(window.window);
-        glfwSetFramebufferSizeCallback(window.window, framebuffer_size_callback);
+        glfwSetFramebufferSizeCallback(window.window, reshape_callback);
         glfwSetCursorPosCallback(window.window, mouse_callback);
         glfwSetScrollCallback(window.window, scroll_callback);
 
         glfwSetInputMode(window.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
+        glEnable(GL_CULL_FACE);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glfwSetWindowUserPointer(window.window, this);
     }
@@ -342,7 +343,7 @@ public:
     }
 };
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void reshape_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
     static_cast<Game*>(glfwGetWindowUserPointer(window))->window.width = width;
