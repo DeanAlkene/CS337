@@ -138,15 +138,13 @@ public:
       shader_skybox("./vertex_skb.glsl", "./fragment_skb.glsl"),
       shader_shadow("./vertex_shadow.glsl", "./fragment_shadow.glsl"),
       shader_debug("./vertex_debug.glsl", "./fragment_debug.glsl"),
-      road(std::string("/home/dean/CS337/Models/Scene/Roads/Roads01.obj")),
-      barrier(std::string("/home/dean/CS337/Models/Scene/Barrier01.obj")),
-      car(std::string("/home/dean/CS337/Models/Scene/Car/Car01.obj"), 1.0, 1.0),
-      skybox(std::string("/home/dean/CS337/Models/Scene/Skybox"), std::string(".tga")),
+      road(std::string("./Scene/Roads/Roads.obj")),
+      barrier(std::string("./Scene/Barrier.obj")),
+      car(std::string("./Scene/Car/Car.obj"), 1.0, 1.0),
+      skybox(std::string("./Scene/Skybox"), std::string(".tga")),
       scene()
     {
-        //camera[0] = Camera(glm::vec3(35.0f, 80.0f, 55.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, -45.0f);
         lightPos = glm::vec3(-8.0f, 10.0f, -2.0f);
-        //lightPos = glm::vec3(200.0f, 100.0f, 200.0f);
         camera[0] = Camera(glm::vec3(-3.0f, 5.0f, -5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 45.0f, -45.0f);
         shadow.setMatrices(lightPos);
         lastX = WINDOW_WIDTH / 2.0f;
@@ -210,7 +208,7 @@ public:
                 glBindFramebuffer(GL_FRAMEBUFFER, 0);
                 shader_shadow.deactivate();
             }
-            /*------------------------------------------------------------------------------*/
+            /*------------------------------------DEBUG------------------------------------------*/
         //    glViewport(0, 0, window.width, window.height);
         //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //    shader_debug.activate();
@@ -219,7 +217,7 @@ public:
         //    glBindTexture(GL_TEXTURE_2D, shadow.getShadowTexture());
         //    shadow.debugDraw();
         //    shader_debug.deactivate();
-            /*------------------------------------------------------------------------------*/
+            /*------------------------------------DEBUG------------------------------------------*/
             glViewport(0, 0, window.width, window.height);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             shader_scene.activate();
@@ -273,27 +271,27 @@ public:
 
         if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         {
-            car.processKeyboard(W, deltaTime);
             if(collisionDetectState)
                 car.collisionDetect(barrier, W);
+            car.processKeyboard(W, deltaTime);
         }
         if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         {
-            car.processKeyboard(A, deltaTime);
             if(collisionDetectState)
                 car.collisionDetect(barrier, A);
+            car.processKeyboard(A, deltaTime);
         }
         if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
         {
-            car.processKeyboard(S, deltaTime);
             if(collisionDetectState)
                 car.collisionDetect(barrier, S);
+            car.processKeyboard(S, deltaTime);
         }
         if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         {
-            car.processKeyboard(D, deltaTime);
             if(collisionDetectState)
                 car.collisionDetect(barrier, D);
+            car.processKeyboard(D, deltaTime);
         }
         if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
         {

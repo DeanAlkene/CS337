@@ -63,13 +63,4 @@ void printMat4(const glm::mat4 &mat)
     std::cout << std::endl;
 }
 
-//TODO: 1. Game.h DONE
-//      2. Scene.h DONE
-//      3. Shadow.h HARD
-//      4. Collision Detection HARD
-//      5. Optimize 't' to change camera SEMI-DONE
-//      6. Reshape function SEMI-DONE NEED CHECK
-//      7. Menu CLOSED 'CAUSE GLFW DON'T SUPPORT
-//      8. Refine all the thing
-
 #endif //LAB02_UTILS_H

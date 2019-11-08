@@ -100,7 +100,6 @@ public:
 
             shader.setInt((name + number), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
-            //std::cout << "Set: " << i << " as " << textures[i].id << std::endl;
         }
 
         glBindVertexArray(VAO);

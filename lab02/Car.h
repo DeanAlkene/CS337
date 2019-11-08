@@ -9,7 +9,7 @@
 #include "Object.h"
 #include "Barrier.h"
 
-const float epsilon = 0.01f;
+const float epsilon = 0.02f;
 
 class Car : public Object
 {
@@ -185,7 +185,7 @@ public:
         }
         if(detected)
         {
-            float factor = 0.5f;
+            float factor = 0.1f;
             if(move == W)
             {
                 goBackward(factor);

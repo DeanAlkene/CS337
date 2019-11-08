@@ -81,18 +81,6 @@ protected:
             else
                 vertex.TexCoords = glm::vec2(0.0f, 0.0f);
 
-            /*
-            vec.x = mesh->mTangents[i].x;
-            vec.y = mesh->mTangents[i].y;
-            vec.z = mesh->mTangents[i].z;
-            vertex.Tangent = vec;
-
-            vec.x = mesh->mBitangents[i].x;
-            vec.y = mesh->mBitangents[i].y;
-            vec.z = mesh->mBitangents[i].z;
-            vertex.Bitangent = vec;
-            */
-
             vertices.push_back(vertex);
         }
 

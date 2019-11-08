@@ -39,7 +39,7 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-        //Set border color to make it real
+        
         GLfloat borderColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
         glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
@@ -69,8 +69,6 @@ public:
 
     void setMatrices(const glm::vec3 &lightPos)
     {
-//        lightProjection = glm::ortho(-lightPos.x, lightPos.x, -lightPos.x, lightPos.x, 1.0f, lightPos.z);
-//        lightView = glm::lookAt(lightPos, glm::vec3(lightPos.x / 2.0f, 0.0f, lightPos.z / 2.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         lightProjection = glm::ortho(-25.0f, 25.0f, -25.0f, 25.0f, 0.1f, 40.0f);
         lightView = glm::lookAt(lightPos, glm::vec3(4.0f, 0.0f, 4.0f), glm::vec3(0.0, 1.0, 0.0));
         lightSpaceMatrix = lightProjection * lightView;

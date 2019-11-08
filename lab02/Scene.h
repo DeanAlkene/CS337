@@ -19,12 +19,12 @@ private:
     Object ground;
 public:
     Scene()
-            : lights(std::string("/home/dean/CS337/Models/Scene/Lights01.obj")),
-              stopSigns(std::string("/home/dean/CS337/Models/Scene/StopSign/StopSign01.obj")),
-              speedLimit(std::string("/home/dean/CS337/Models/Scene/SpeedLimit/SpeedLimit01.obj")),
-              trafficLight(std::string("/home/dean/CS337/Models/Scene/trafficlight/trafficlight01.obj")),
-              trees(std::string("/home/dean/CS337/Models/Scene/Palm/Palm01.obj")),
-              ground(std::string("/home/dean/CS337/Models/Scene/Ground/Ground01.obj")) {}
+            : lights(std::string("./Scene/Lights.obj")),
+              stopSigns(std::string("./Scene/StopSign/StopSign.obj")),
+              speedLimit(std::string("./Scene/SpeedLimit/SpeedLimit.obj")),
+              trafficLight(std::string("./Scene/trafficlight/trafficlight.obj")),
+              trees(std::string("./Scene/Palm/Palm.obj")),
+              ground(std::string("./Scene/Ground/Ground.obj")) {}
 
     void Draw(Shader &shader) {
         lights.Draw(shader);
