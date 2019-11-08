@@ -43,7 +43,6 @@ float calcShadow(vec4 fragPosLightSpace)
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(light.position - FragPos);
     float bias = max(0.0001f * (1.0f - dot(norm, lightDir)), 0.00001f);
-    // float bias = 0.0f;
 
     float shadow = 0.0f;
     vec2 texelSize = 1.0f / textureSize(texture_shadow, 0);
@@ -74,8 +73,6 @@ vec3 calcLight(Light light)
     vec3 diffuse = diff * light.diffuse * texture(texture_diffuse0, TexCoords).rgb;
     //specular
     vec3 viewDir = normalize(viewPos - FragPos);
-    //vec3 reflectDir = reflect(-lightDir, norm);
-    //float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 32);
     vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(norm, halfwayDir), 0.0f), 64.0f);
     vec3 specular = spec * light.specular * texture(texture_specular0, TexCoords).rgb;
@@ -83,7 +80,6 @@ vec3 calcLight(Light light)
     float shadow = shadows ? calcShadow(FragPosLightSpace) : 0.0f;
     shadow = min(shadow, 0.75f);
 
-    //return (ambient + (1.0f - shadow) * (diffuse + specular));
     return ((1.0f - shadow) * (ambient + diffuse + specular));
 }
 

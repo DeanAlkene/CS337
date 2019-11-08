@@ -109,7 +109,11 @@ public:
         else if(dir == Q)
             velocity += acceleration * deltaTime;
         else if(dir == E)
+        {
             velocity -= acceleration * deltaTime;
+            if(velocity < 0.0f)
+                velocity = 0.0f;
+        }
     }
 
     void turnLeft(float deltaTime)
